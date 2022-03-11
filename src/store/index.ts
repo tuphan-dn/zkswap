@@ -6,7 +6,7 @@ import ui from './ui.reducer'
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware(bigintSerializationMiddleware),
-  devTools: devTools('kylan'),
+  devTools: devTools('zkswap'),
   reducer: {
     ui,
   },
