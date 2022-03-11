@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { Layout } from 'antd'
 
 import Home from 'view/home'
+import Watcher from 'watcher'
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
           <Redirect exact from="*" to="/home" />
         </Switch>
       </Layout>
+      <Watcher />
     </Layout>
   )
 }

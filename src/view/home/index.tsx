@@ -1,4 +1,5 @@
 import { Row, Col, Typography, Button } from 'antd'
+import IconSax from 'components/iconsax'
 
 const Home = () => {
   return (
@@ -7,7 +8,9 @@ const Home = () => {
         <Typography.Text>Home</Typography.Text>
       </Col>
       <Col span={24}>
-        <Button type="primary">Test</Button>
+        <Button type="primary" icon={<IconSax name="Activity" />}>
+          Test
+        </Button>
       </Col>
     </Row>
   )
