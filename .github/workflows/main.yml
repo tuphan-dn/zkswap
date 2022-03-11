@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Welcome
-        run: echo Start deploying Project Kylan
+        run: echo Start deploying ZK Swap
       - name: Checkout git
         uses: actions/checkout@v2
       - name: Install dependencies
