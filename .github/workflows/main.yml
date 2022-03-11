@@ -1,0 +1,22 @@
+name: Automatic Deployment
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Welcome
+        run: echo Start deploying Project Kylan
+      - name: Checkout git
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Deploy core to gh-pages branch
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
