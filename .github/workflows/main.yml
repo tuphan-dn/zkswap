@@ -13,7 +13,7 @@ jobs:
       - name: Checkout git
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
       - name: Deploy core to gh-pages branch
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
