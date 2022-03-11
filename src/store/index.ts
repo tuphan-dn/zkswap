@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit'
 import { devTools, bigintSerializationMiddleware } from 'store/devTools'
 
 import ui from './ui.reducer'
-import hashmap from './hashmap.reducer'
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -10,7 +9,6 @@ const store = configureStore({
   devTools: devTools('zkswap'),
   reducer: {
     ui,
-    hashmap,
   },
 })
 
