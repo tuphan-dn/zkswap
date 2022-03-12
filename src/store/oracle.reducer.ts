@@ -5,6 +5,7 @@ import {
   DepositProof,
   HybridEquality,
   HybridEqualityProof,
+  ScalarMultiplication,
   Withdrawal,
   WithdrawalProof,
 } from 'helper/nizk'
@@ -198,6 +199,7 @@ export const swapAB = createAsyncThunk<
       throw new Error('Invalid proof of amount A')
     if (!HybridEquality.verify(srcAmountB, dstAmountB, equalityProofB))
       throw new Error('Invalid proof of amount B')
+
     const {
       hashmap,
       oracle: { treasuryAPublicKey, treasuryBPublicKey, ra, rb },
@@ -254,6 +256,7 @@ export const swapBA = createAsyncThunk<
       throw new Error('Invalid proof of amount B')
     if (!HybridEquality.verify(srcAmountA, dstAmountA, equalityProofA))
       throw new Error('Invalid proof of amount A')
+
     const {
       hashmap,
       oracle: { treasuryAPublicKey, treasuryBPublicKey, ra, rb },
