@@ -5,7 +5,6 @@ import {
   DepositProof,
   HybridEquality,
   HybridEqualityProof,
-  ScalarMultiplication,
   Withdrawal,
   WithdrawalProof,
 } from 'helper/nizk'
