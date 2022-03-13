@@ -59,22 +59,16 @@ const OracleMonitor = () => {
       mintLP.supply.P,
     )
     // Deposit
-    try {
-      await dispatch(
-        deposit({
-          srcAPublicKey: srcA.publicKey,
-          srcBPublicKey: srcB.publicKey,
-          dstLPPublicKey: lpWallet.publicKey,
-          depositProof,
-          // @ts-ignore
-          transfer: (...args) => dispatch(transfer(...args)),
-          // @ts-ignore
-          mintTo: (...args) => dispatch(mintTo(...args)),
-        }),
-      ).unwrap()
-    } catch (er) {
-      console.log(er)
-    }
+    await dispatch(
+      deposit({
+        srcAPublicKey: srcA.publicKey,
+        srcBPublicKey: srcB.publicKey,
+        dstLPPublicKey: lpWallet.publicKey,
+        depositProof,
+        transfer: (args: any) => dispatch(transfer(args)),
+        mintTo: (args: any) => dispatch(mintTo(args)),
+      }),
+    )
   }, [
     dispatch,
     srcA,

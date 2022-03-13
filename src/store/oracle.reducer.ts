@@ -81,9 +81,24 @@ export const deposit = createAsyncThunk<
       srcAmountLP,
       dstAmountLP,
     } = depositProof
-    transfer(srcAmountA, dstAmountA, srcAPublicKey, treasuryAPublicKey)
-    transfer(srcAmountB, dstAmountB, srcBPublicKey, treasuryBPublicKey)
-    mintTo(srcAmountLP, dstAmountLP, dstLPPublicKey, mintLPPublicKey)
+    transfer({
+      srcAmount: srcAmountA,
+      dstAmount: dstAmountA,
+      srcPublicKey: srcAPublicKey,
+      dstPublicKey: treasuryAPublicKey,
+    })
+    transfer({
+      srcAmount: srcAmountB,
+      dstAmount: dstAmountB,
+      srcPublicKey: srcBPublicKey,
+      dstPublicKey: treasuryBPublicKey,
+    })
+    mintTo({
+      srcAmount: srcAmountLP,
+      dstAmount: dstAmountLP,
+      dstPublicKey: dstLPPublicKey,
+      mintPublicKey: mintLPPublicKey,
+    })
     // Derive the internal oracle state
     const a = hashmap(
       dstAmountA.C.subtract(dstAmountA.D.multiply(treasuryA.s)).toHex(),

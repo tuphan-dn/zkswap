@@ -53,8 +53,8 @@ const Transfer = () => {
           dst.amount.P.multiply(z),
           dst.amount.P,
         ),
-        srcPublickey: src.publicKey,
-        dstPublickey: dst.publicKey,
+        srcPublicKey: src.publicKey,
+        dstPublicKey: dst.publicKey,
       }),
     ).unwrap()
     return setAmount('')

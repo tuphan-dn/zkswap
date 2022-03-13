@@ -76,19 +76,19 @@ export const mintTo = createAsyncThunk<
   {
     srcAmount: TwistedElGamal
     dstAmount: TwistedElGamal
-    dstPublickey: PublicKey
+    dstPublicKey: PublicKey
     mintPublicKey: PublicKey
   },
   { state: any }
 >(
   `${NAME}/mintTo`,
   async (
-    { srcAmount, dstAmount, dstPublickey, mintPublicKey },
+    { srcAmount, dstAmount, dstPublicKey, mintPublicKey },
     { getState },
   ) => {
     const { ledger } = getState()
     let mint = { ...ledger[mintPublicKey.toBase58()] }
-    let account = { ...ledger[dstPublickey.toBase58()] }
+    let account = { ...ledger[dstPublicKey.toBase58()] }
     mint.supply = mint.supply.add(srcAmount)
     account.amount = account.amount.add(dstAmount)
     return {
@@ -102,16 +102,16 @@ export const burn = createAsyncThunk<
   LedgerState,
   {
     amount: bigint
-    srcPublickey: PublicKey
+    srcPublicKey: PublicKey
     mintPublicKey: PublicKey
   },
   { state: any }
 >(
   `${NAME}/burn`,
-  async ({ amount, srcPublickey, mintPublicKey }, { getState }) => {
+  async ({ amount, srcPublicKey, mintPublicKey }, { getState }) => {
     const { ledger } = getState()
     let mint = { ...ledger[mintPublicKey.toBase58()] }
-    let account = { ...ledger[srcPublickey.toBase58()] }
+    let account = { ...ledger[srcPublicKey.toBase58()] }
     const z = randScalar()
     const srcAmount = TwistedElGamal.build(
       Point.G.multiply(amount).add(Point.H.multiply(z)),
@@ -133,19 +133,19 @@ export const transfer = createAsyncThunk<
   {
     srcAmount: TwistedElGamal
     dstAmount: TwistedElGamal
-    srcPublickey: PublicKey
-    dstPublickey: PublicKey
+    srcPublicKey: PublicKey
+    dstPublicKey: PublicKey
   },
   { state: any }
 >(
   `${NAME}/transfer`,
   async (
-    { srcAmount, dstAmount, srcPublickey, dstPublickey },
+    { srcAmount, dstAmount, srcPublicKey, dstPublicKey },
     { getState },
   ) => {
     const { ledger } = getState()
-    let src = { ...ledger[srcPublickey.toBase58()] }
-    let dst = { ...ledger[dstPublickey.toBase58()] }
+    let src = { ...ledger[srcPublicKey.toBase58()] }
+    let dst = { ...ledger[dstPublicKey.toBase58()] }
     if (src.mint.toBase58() !== dst.mint.toBase58())
       throw new Error(
         'The source and destination account has 2 different mints',

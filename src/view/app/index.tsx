@@ -53,7 +53,7 @@ const App = () => {
             account.amount.P.multiply(z),
             account.amount.P,
           ),
-          dstPublickey: account.publicKey,
+          dstPublicKey: account.publicKey,
           mintPublicKey: account.mint,
         }),
       )
