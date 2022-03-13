@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { PublicKey } from '@solana/web3.js'
+import { hashmap } from 'helper/hashmap'
 import {
   Deposit,
   DepositProof,
@@ -66,7 +67,6 @@ export const deposit = createAsyncThunk<
       throw new Error('Invalid proof of deposit')
 
     const {
-      hashmap,
       oracle: {
         treasuryAPublicKey,
         treasuryBPublicKey,
@@ -91,10 +91,12 @@ export const deposit = createAsyncThunk<
     transfer(srcAmountB, dstAmountB, srcBPublicKey, treasuryBPublicKey)
     mintTo(srcAmountLP, dstAmountLP, dstLPPublicKey, mintLPPublicKey)
     // Derive the internal oracle state
-    const a =
-      hashmap[dstAmountA.C.subtract(dstAmountA.D.multiply(treasuryA.s)).toHex()]
-    const b =
-      hashmap[dstAmountB.C.subtract(dstAmountB.D.multiply(treasuryB.s)).toHex()]
+    const a = hashmap(
+      dstAmountA.C.subtract(dstAmountA.D.multiply(treasuryA.s)).toHex(),
+    )
+    const b = hashmap(
+      dstAmountB.C.subtract(dstAmountB.D.multiply(treasuryB.s)).toHex(),
+    )
     if (!a || !b) throw new Error('Cannot solve the discrete log problem')
     return { ra: ra + BigInt(a), rb: rb + BigInt(b) }
   },
@@ -128,7 +130,6 @@ export const withdraw = createAsyncThunk<
       throw new Error('Invalid proof of withdrawal')
 
     const {
-      hashmap,
       oracle: {
         treasuryAPublicKey,
         treasuryBPublicKey,
@@ -153,10 +154,12 @@ export const withdraw = createAsyncThunk<
     transfer(srcAmountB, dstAmountB, treasuryBPublicKey, dstBPublicKey)
     burn(srcAmountLP, dstAmountLP, srcLPPublicKey, mintLPPublicKey)
     // Derive the internal oracle state
-    const a =
-      hashmap[srcAmountA.C.subtract(srcAmountA.D.multiply(treasuryA.s)).toHex()]
-    const b =
-      hashmap[srcAmountB.C.subtract(srcAmountB.D.multiply(treasuryB.s)).toHex()]
+    const a = hashmap(
+      srcAmountA.C.subtract(srcAmountA.D.multiply(treasuryA.s)).toHex(),
+    )
+    const b = hashmap(
+      srcAmountB.C.subtract(srcAmountB.D.multiply(treasuryB.s)).toHex(),
+    )
     if (!a || !b) throw new Error('Cannot solve the discrete log problem')
     return { ra: ra - BigInt(a), rb: rb - BigInt(b) }
   },
@@ -200,7 +203,6 @@ export const swapAB = createAsyncThunk<
       throw new Error('Invalid proof of amount B')
 
     const {
-      hashmap,
       oracle: { treasuryAPublicKey, treasuryBPublicKey, ra, rb },
       ledger,
     } = getState()
@@ -210,10 +212,12 @@ export const swapAB = createAsyncThunk<
     transfer(srcAmountA, dstAmountA, srcPublicKey, treasuryAPublicKey)
     transfer(srcAmountB, dstAmountB, treasuryBPublicKey, dstPublicKey)
     // Derive the internal oracle state
-    const a =
-      hashmap[dstAmountA.C.subtract(dstAmountA.D.multiply(treasuryA.s)).toHex()]
-    const b =
-      hashmap[srcAmountB.C.subtract(srcAmountB.D.multiply(treasuryB.s)).toHex()]
+    const a = hashmap(
+      dstAmountA.C.subtract(dstAmountA.D.multiply(treasuryA.s)).toHex(),
+    )
+    const b = hashmap(
+      srcAmountB.C.subtract(srcAmountB.D.multiply(treasuryB.s)).toHex(),
+    )
     if (!a || !b) throw new Error('Cannot solve the discrete log problem')
     return { ra: ra + BigInt(a), rb: rb - BigInt(b) }
   },
@@ -257,7 +261,6 @@ export const swapBA = createAsyncThunk<
       throw new Error('Invalid proof of amount A')
 
     const {
-      hashmap,
       oracle: { treasuryAPublicKey, treasuryBPublicKey, ra, rb },
       ledger,
     } = getState()
@@ -267,10 +270,12 @@ export const swapBA = createAsyncThunk<
     transfer(srcAmountB, dstAmountB, srcPublicKey, treasuryBPublicKey)
     transfer(srcAmountA, dstAmountA, treasuryAPublicKey, dstPublicKey)
     // Derive the internal oracle state
-    const a =
-      hashmap[srcAmountA.C.subtract(srcAmountA.D.multiply(treasuryA.s)).toHex()]
-    const b =
-      hashmap[dstAmountB.C.subtract(dstAmountB.D.multiply(treasuryB.s)).toHex()]
+    const a = hashmap(
+      srcAmountA.C.subtract(srcAmountA.D.multiply(treasuryA.s)).toHex(),
+    )
+    const b = hashmap(
+      dstAmountB.C.subtract(dstAmountB.D.multiply(treasuryB.s)).toHex(),
+    )
     if (!a || !b) throw new Error('Cannot solve the discrete log problem')
     return { ra: ra - BigInt(a), rb: rb + BigInt(b) }
   },

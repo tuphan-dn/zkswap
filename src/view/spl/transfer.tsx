@@ -1,21 +1,19 @@
 import { ChangeEvent, useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Keypair, PublicKey } from '@solana/web3.js'
 
-import { Row, Col, Input, Tooltip, Space, Button, Divider } from 'antd'
+import { Row, Col, Input, Space, Button, Divider } from 'antd'
 import IconSax from 'components/iconsax'
+import Balance from './balance'
+import NumericInput from 'components/numericInput'
 
 import { AppDispatch, AppState } from 'store'
 import { Account, initializeAccount, transfer } from 'store/ledger.reducer'
 import { TwistedElGamal } from 'helper/twistedElGamal'
 import { Point } from 'helper/point'
 import { randScalar } from 'helper/utils'
-import { Keypair, PublicKey } from '@solana/web3.js'
-import Balance from './balance'
-
-let timeoutId: ReturnType<typeof setTimeout> | undefined
 
 const Transfer = () => {
-  const [error, setError] = useState('')
   const [amount, setAmount] = useState<string | number>('')
   const [dstAddress, setDstAddress] = useState(
     new Keypair().publicKey.toBase58(),
@@ -26,28 +24,9 @@ const Transfer = () => {
     ledger,
   } = useSelector((state: AppState) => state)
 
-  const onAmount = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const onError = (er: string) => {
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-        timeoutId = undefined
-      }
-      setError(er)
-      timeoutId = setTimeout(() => setError(''), 500)
-    }
-    const value = e.target.value || ''
-    if (value === '') return setAmount('')
-    const amount = parseInt(value)
-    if (value !== amount.toString() || amount < 0 || amount > 10 ** 6)
-      return onError(
-        'Due to dicrete log limitation, the input only supports integers in a range from 0 to 1,000,000.',
-      )
-    return setAmount(amount)
-  }, [])
-
   const getAccount = useCallback(
     async (publicKey: PublicKey) => {
-      const acc = { ...ledger[publicKey.toBase58()] } as Account
+      const acc = { ...ledger[publicKey.toBase58()] }
       if (acc.type === 'account') return acc
       const { [publicKey.toBase58()]: re } = (await dispatch(
         initializeAccount({
@@ -84,29 +63,20 @@ const Transfer = () => {
   return (
     <Row gutter={[24, 24]}>
       <Col xs={24} md={12}>
-        <Tooltip
-          title={
-            <Space>
-              <IconSax name="Warning2" />
-              {error}
-            </Space>
+        <NumericInput
+          placeholder="Amount"
+          onChange={(value) => setAmount(value)}
+          value={amount}
+          suffix={
+            <Button
+              type="text"
+              icon={<IconSax name="Send" />}
+              onClick={onSend}
+              disabled={!amount}
+              style={{ marginRight: -7 }}
+            />
           }
-          visible={!!error}
-        >
-          <Input
-            onChange={onAmount}
-            value={amount}
-            suffix={
-              <Button
-                type="text"
-                icon={<IconSax name="Send" />}
-                onClick={onSend}
-                disabled={!amount}
-                style={{ marginRight: -7 }}
-              />
-            }
-          />
-        </Tooltip>
+        />
       </Col>
       <Col xs={24} md={12}>
         <Input

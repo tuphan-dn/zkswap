@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 
-import { Row, Col } from 'antd'
+import { Row, Col, Typography } from 'antd'
 
 import { AppState } from 'store'
 import Info from './info'
@@ -13,7 +13,9 @@ const SPL = () => {
 
   return (
     <Row gutter={[24, 24]}>
-      <Col span={24}>Test SPL</Col>
+      <Col span={24}>
+        <Typography.Title level={3}>SPL Testing</Typography.Title>
+      </Col>
       <Col span={24}>
         <Info wallet={wallet1} />
       </Col>

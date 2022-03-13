@@ -4,15 +4,14 @@ import { PublicKey } from '@solana/web3.js'
 
 import { AppState } from 'store'
 
-export const useAccount = (accountPublicKey: PublicKey) => {
+export const useAccount = (publicKey: PublicKey) => {
   const { ledger } = useSelector((state: AppState) => state)
 
   const account = useMemo(() => {
-    const account = Object.values(ledger).find(
-      ({ publicKey }) => publicKey.toBase58() === accountPublicKey.toBase58(),
-    )
+    const account = { ...ledger[publicKey.toBase58()] }
     if (account && account.type === 'account') return account
-  }, [ledger, accountPublicKey])
+    return undefined
+  }, [ledger, publicKey])
 
   return account
 }

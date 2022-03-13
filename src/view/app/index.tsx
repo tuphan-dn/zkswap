@@ -2,13 +2,13 @@ import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
-import { Layout } from 'antd'
+import { Row, Col, Affix, Card, Layout } from 'antd'
+import Header from 'view/header'
 import Home from 'view/home'
 import SPL from 'view/spl'
 import Watcher from 'watcher'
 
 import { AppDispatch, AppState } from 'store'
-import { loadHashmap } from 'store/hashmap.reducer'
 import {
   Account,
   initializeAccount,
@@ -63,18 +63,29 @@ const App = () => {
     initMint(wallet2) // Init #2 mint and accounts
   }, [initMint, wallet1, wallet2])
 
-  useEffect(() => {
-    dispatch(loadHashmap())
-  }, [dispatch])
-
   return (
     <Layout>
+      {/* Header */}
+      <Affix>
+        <Card
+          style={{ borderRadius: '0px 0px 16px 16px' }}
+          bodyStyle={{ padding: 16 }}
+          bordered={false}
+        >
+          <Header />
+        </Card>
+      </Affix>
+      {/* Body */}
       <Layout style={{ padding: 16 }}>
-        <Switch>
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/spl" component={SPL} />
-          <Redirect exact from="*" to="/home" />
-        </Switch>
+        <Row gutter={[24, 24]}>
+          <Col span={24}>
+            <Switch>
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/spl" component={SPL} />
+              <Redirect exact from="*" to="/home" />
+            </Switch>
+          </Col>
+        </Row>
       </Layout>
       <Watcher />
     </Layout>

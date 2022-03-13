@@ -1,20 +1,18 @@
-import { useSelector } from 'react-redux'
 import { PublicKey } from '@solana/web3.js'
 
 import { useAccount } from 'hooks/useAccount'
-import { AppState } from 'store'
+import { hashmap } from 'helper/hashmap'
 
 export type BalanceProps = { publicKey: PublicKey }
 
 const Balance = ({ publicKey }: BalanceProps) => {
-  const { hashmap } = useSelector((state: AppState) => state)
   const account = useAccount(publicKey)
 
   let balance = 0
-  if (account) {
+  if (account && account.type === 'account') {
     const { amount } = account
-    const commitment = amount.C.subtract(amount.D.multiply(account.s))
-    balance = hashmap[commitment.toHex()] || 0
+    const commitment = amount.C.subtract(amount.D.multiply(account.s)).toHex()
+    balance = hashmap(commitment) || 0
   }
 
   return <span>{balance}</span>

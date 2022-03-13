@@ -1,41 +1,26 @@
-import { useCallback } from 'react'
-import { useDispatch } from 'react-redux'
-import { Keypair } from '@solana/web3.js'
+import { useSelector } from 'react-redux'
 
-import { Row, Col, Typography, Button } from 'antd'
-import IconSax from 'components/iconsax'
+import { Row, Col } from 'antd'
+import OracleMonitor from 'view/oracleMonitor'
+import WalletMonitor from 'view/walletMonitor'
 
-import { AppDispatch } from 'store'
-import { initializeAccount, initializeMint } from 'store/ledger.reducer'
-import { useAccount } from 'hooks/useAccount'
-
-const mintPublicKey = new Keypair().publicKey
-const accountPublicKey = new Keypair().publicKey
+import { AppState } from 'store'
 
 const Home = () => {
-  const dispatch = useDispatch<AppDispatch>()
-
-  const test = useCallback(async () => {
-    await dispatch(initializeMint({ mintPublicKey }))
-    await dispatch(initializeAccount({ mintPublicKey, accountPublicKey }))
-  }, [dispatch])
-
-  const account = useAccount(accountPublicKey)
-  console.log(account)
+  const {
+    wallet: { wallet1, wallet2 },
+  } = useSelector((state: AppState) => state)
 
   return (
     <Row gutter={[24, 24]}>
-      <Col span={24}>
-        <Typography.Text>Home</Typography.Text>
+      <Col xs={24} md={12}>
+        <OracleMonitor />
       </Col>
-      <Col span={24}>
-        <Button
-          type="primary"
-          icon={<IconSax name="Activity" />}
-          onClick={test}
-        >
-          Test
-        </Button>
+      <Col xs={24} md={12}>
+        <WalletMonitor publicKey={wallet1.publicKey} />
+      </Col>
+      <Col xs={24} md={12}>
+        <WalletMonitor publicKey={wallet2.publicKey} />
       </Col>
     </Row>
   )
