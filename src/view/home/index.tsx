@@ -8,7 +8,7 @@ import { AppState } from 'store'
 
 const Home = () => {
   const {
-    wallet: { wallet1, wallet2 },
+    wallet: { wallet1, wallet2, lpWallet },
   } = useSelector((state: AppState) => state)
 
   return (
@@ -22,6 +22,11 @@ const Home = () => {
       <Col xs={24} md={12}>
         <WalletMonitor publicKey={wallet2.publicKey} />
       </Col>
+      {lpWallet?.publicKey ? (
+        <Col xs={24} md={12}>
+          <WalletMonitor publicKey={lpWallet.publicKey} />
+        </Col>
+      ) : null}
     </Row>
   )
 }
