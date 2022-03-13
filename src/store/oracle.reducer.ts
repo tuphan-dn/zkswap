@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { PublicKey } from '@solana/web3.js'
+import { Keypair, PublicKey } from '@solana/web3.js'
 import { hashmap } from 'helper/hashmap'
 import {
   Deposit,
@@ -12,12 +12,10 @@ import {
 import { TwistedElGamal } from 'helper/twistedElGamal'
 import { Account } from './ledger.reducer'
 
-export const PRECISION = BigInt(1_000_000_000)
-
 export type OracleState = {
-  treasuryAPublicKey?: PublicKey
-  treasuryBPublicKey?: PublicKey
-  mintLPPublicKey?: PublicKey
+  treasuryAPublicKey: PublicKey
+  treasuryBPublicKey: PublicKey
+  mintLPPublicKey: PublicKey
   ra: bigint
   rb: bigint
 }
@@ -28,19 +26,15 @@ export type OracleState = {
 
 const NAME = 'oracle'
 const initialState: OracleState = {
+  treasuryAPublicKey: new Keypair().publicKey,
+  treasuryBPublicKey: new Keypair().publicKey,
+  mintLPPublicKey: new Keypair().publicKey,
   ra: BigInt(0),
   rb: BigInt(0),
 }
 
-export const setOracle = createAsyncThunk(
-  `${NAME}/setOracle`,
-  async (state: OracleState) => {
-    return state
-  },
-)
-
 export const deposit = createAsyncThunk<
-  OracleState,
+  Partial<OracleState>,
   {
     srcAPublicKey: PublicKey
     srcBPublicKey: PublicKey
@@ -103,7 +97,7 @@ export const deposit = createAsyncThunk<
 )
 
 export const withdraw = createAsyncThunk<
-  OracleState,
+  Partial<OracleState>,
   {
     dstAPublicKey: PublicKey
     dstBPublicKey: PublicKey
@@ -166,7 +160,7 @@ export const withdraw = createAsyncThunk<
 )
 
 export const swapAB = createAsyncThunk<
-  OracleState,
+  Partial<OracleState>,
   {
     gamma: bigint
     srcPublicKey: PublicKey
@@ -224,7 +218,7 @@ export const swapAB = createAsyncThunk<
 )
 
 export const swapBA = createAsyncThunk<
-  OracleState,
+  Partial<OracleState>,
   {
     gamma: bigint
     srcPublicKey: PublicKey
@@ -291,10 +285,6 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) =>
     void builder
-      .addCase(
-        setOracle.fulfilled,
-        (state, { payload }) => void Object.assign(state, payload),
-      )
       .addCase(
         deposit.fulfilled,
         (state, { payload }) => void Object.assign(state, payload),

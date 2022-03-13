@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { Keypair, PublicKey } from '@solana/web3.js'
 
 export type Wallet = {
@@ -13,6 +13,7 @@ export type Wallet = {
 export type WalletState = {
   wallet1: Wallet
   wallet2: Wallet
+  lpWallet?: Wallet
 }
 
 const NAME = 'wallet'
@@ -27,6 +28,17 @@ const initialState: WalletState = {
   },
 }
 
+export const setLPWallet = createAsyncThunk(
+  `${NAME}/setLPWallet`,
+  async ({ mintPublicKey }: { mintPublicKey: PublicKey }) => {
+    const lpWallet: Wallet = {
+      publicKey: new Keypair().publicKey,
+      mint: mintPublicKey,
+    }
+    return { lpWallet }
+  },
+)
+
 /**
  * Usual procedure
  */
@@ -35,7 +47,11 @@ const slice = createSlice({
   name: NAME,
   initialState,
   reducers: {},
-  extraReducers: (builder) => void builder,
+  extraReducers: (builder) =>
+    void builder.addCase(
+      setLPWallet.fulfilled,
+      (state, { payload }) => void Object.assign(state, payload),
+    ),
 })
 
 export default slice.reducer

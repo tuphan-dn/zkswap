@@ -3,7 +3,7 @@ import { invert, randScalar } from 'helper/utils'
 import { TwistedElGamal } from 'helper/twistedElGamal'
 import { HybridEquality, HybridEqualityProof } from './hybridEquality'
 import { Account } from 'store/ledger.reducer'
-import { PRECISION } from 'store/oracle.reducer'
+import { PRECISION } from 'hooks/usePrice'
 
 /**
  * Product Constant Proof

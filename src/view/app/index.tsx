@@ -6,6 +6,7 @@ import { Row, Col, Affix, Card, Layout } from 'antd'
 import Header from 'view/header'
 import Home from 'view/home'
 import SPL from 'view/spl'
+import Liquidity from 'view/liquidity'
 import Watcher from 'watcher'
 
 import { AppDispatch, AppState } from 'store'
@@ -18,17 +19,19 @@ import {
 import { TwistedElGamal } from 'helper/twistedElGamal'
 import { Point } from 'helper/point'
 import { randScalar } from 'helper/utils'
-import { Wallet } from 'store/wallet.reducer'
+import { setLPWallet, Wallet } from 'store/wallet.reducer'
+
+const SUPPLY = BigInt(10 ** 3)
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>()
   const {
+    oracle: { mintLPPublicKey },
     wallet: { wallet1, wallet2 },
   } = useSelector((state: AppState) => state)
 
-  const initMint = useCallback(
+  const initToken = useCallback(
     async (wallet: Wallet) => {
-      const supply = BigInt(10 ** 3)
       const z = randScalar()
       // Init a mint
       const { [wallet.mint.toBase58()]: mint } = await dispatch(
@@ -44,9 +47,9 @@ const App = () => {
       // Mint supply to the account
       await dispatch(
         mintTo({
-          srcAmount: new TwistedElGamal(supply, mint.s),
+          srcAmount: new TwistedElGamal(SUPPLY, mint.s),
           dstAmount: TwistedElGamal.build(
-            Point.G.multiply(supply).add(Point.H.multiply(z)),
+            Point.G.multiply(SUPPLY).add(Point.H.multiply(z)),
             account.amount.P.multiply(z),
             account.amount.P,
           ),
@@ -58,13 +61,31 @@ const App = () => {
     [dispatch],
   )
 
+  const initLP = useCallback(async () => {
+    // Init mint lp
+    await dispatch(initializeMint({ mintPublicKey: mintLPPublicKey }))
+    const { lpWallet } = await dispatch(
+      setLPWallet({ mintPublicKey: mintLPPublicKey }),
+    ).unwrap()
+    // Set up lp wallet
+    await dispatch(
+      initializeAccount({
+        mintPublicKey: lpWallet.mint,
+        accountPublicKey: lpWallet.publicKey,
+      }),
+    )
+  }, [dispatch, mintLPPublicKey])
+
   useEffect(() => {
-    initMint(wallet1) // Init #1 mint and accounts
-    initMint(wallet2) // Init #2 mint and accounts
-  }, [initMint, wallet1, wallet2])
+    ;(async () => {
+      await initToken(wallet1) // Init #1 mint and accounts
+      await initToken(wallet2) // Init #2 mint and accounts
+      await initLP() // Init LP mint and accounts
+    })()
+  }, [initToken, initLP, wallet1, wallet2])
 
   return (
-    <Layout>
+    <Layout style={{ minHeight: '100vh' }}>
       {/* Header */}
       <Affix>
         <Card
@@ -82,6 +103,7 @@ const App = () => {
             <Switch>
               <Route exact path="/home" component={Home} />
               <Route exact path="/spl" component={SPL} />
+              <Route exact path="/liquidity" component={Liquidity} />
               <Redirect exact from="*" to="/home" />
             </Switch>
           </Col>

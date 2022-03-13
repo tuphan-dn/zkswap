@@ -1,14 +1,90 @@
-import { useSelector } from 'react-redux'
+import { useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { Card, Col, Divider, Row, Space, Typography } from 'antd'
+import { Button, Card, Col, Divider, Row, Space, Typography } from 'antd'
 
-import { AppState } from 'store'
+import { AppDispatch, AppState } from 'store'
+import { deposit } from 'store/oracle.reducer'
+import { Deposit } from 'helper/nizk'
+import { usePrice } from 'hooks/usePrice'
+import { useAccount } from 'hooks/useAccount'
+import { useMint } from 'hooks/useMint'
+import {
+  Account,
+  initializeAccount,
+  mintTo,
+  transfer,
+} from 'store/ledger.reducer'
+
+const DEPOSIT = BigInt(10 ** 2)
 
 const OracleMonitor = () => {
   const {
     oracle: { ra, rb },
+    oracle: { treasuryAPublicKey, treasuryBPublicKey },
+    wallet: { wallet1, wallet2, lpWallet },
   } = useSelector((state: AppState) => state)
-  const p = !ra ? BigInt(0) : (rb * BigInt(10 ** 9)) / ra
+  const dispatch = useDispatch<AppDispatch>()
+
+  const p = usePrice()
+  const srcA = useAccount(wallet1.publicKey)
+  const srcB = useAccount(wallet2.publicKey)
+  const dstLP = useAccount(lpWallet?.publicKey)
+  const mintLP = useMint(lpWallet?.mint)
+
+  const initSwap = useCallback(async () => {
+    if (!srcA || !srcB || !dstLP || !mintLP || !lpWallet) return
+    // Init treasuries
+    const { [treasuryAPublicKey.toBase58()]: treasuryA } = (await dispatch(
+      initializeAccount({
+        mintPublicKey: srcA.mint,
+        accountPublicKey: treasuryAPublicKey,
+      }),
+    ).unwrap()) as Record<string, Account>
+    const { [treasuryBPublicKey.toBase58()]: treasuryB } = (await dispatch(
+      initializeAccount({
+        mintPublicKey: srcB.mint,
+        accountPublicKey: treasuryBPublicKey,
+      }),
+    ).unwrap()) as Record<string, Account>
+    // Create deposit proof
+    const depositProof = Deposit.prove(
+      DEPOSIT,
+      DEPOSIT,
+      srcA,
+      srcB,
+      dstLP,
+      treasuryA.amount.P,
+      treasuryB.amount.P,
+      mintLP.supply.P,
+    )
+    // Deposit
+    try {
+      await dispatch(
+        deposit({
+          srcAPublicKey: srcA.publicKey,
+          srcBPublicKey: srcB.publicKey,
+          dstLPPublicKey: lpWallet.publicKey,
+          depositProof,
+          // @ts-ignore
+          transfer: (...args) => dispatch(transfer(...args)),
+          // @ts-ignore
+          mintTo: (...args) => dispatch(mintTo(...args)),
+        }),
+      ).unwrap()
+    } catch (er) {
+      console.log(er)
+    }
+  }, [
+    dispatch,
+    srcA,
+    srcB,
+    dstLP,
+    treasuryAPublicKey,
+    treasuryBPublicKey,
+    lpWallet,
+    mintLP,
+  ])
 
   return (
     <Card>
@@ -33,6 +109,11 @@ const OracleMonitor = () => {
               <Typography.Text>{rb.toString()}</Typography.Text>
             </Space>
           </Space>
+        </Col>
+        <Col span={24}>
+          <Button type="primary" onClick={initSwap} disabled={!!ra || !!rb}>
+            Initialize a pool
+          </Button>
         </Col>
       </Row>
     </Card>

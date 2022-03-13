@@ -2,6 +2,7 @@ import { Col, Row, Typography, Space, Card } from 'antd'
 import Balance from './balance'
 
 import { Wallet } from 'store/wallet.reducer'
+import { shortenAddress } from 'helper/utils'
 
 export type InfoProps = { wallet: Wallet }
 
@@ -15,7 +16,7 @@ const Info = ({ wallet }: InfoProps) => {
               Address:
             </Typography.Title>
             <Typography.Title level={5}>
-              {wallet.publicKey.toBase58()}
+              {shortenAddress(wallet.publicKey.toBase58())}
             </Typography.Title>
           </Space>
         </Col>

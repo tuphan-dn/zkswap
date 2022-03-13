@@ -8,7 +8,6 @@ export type NavigationProps = { name: string; to: string }
 export const Navigation = ({ name, to }: NavigationProps) => {
   const histoty = useHistory()
   const { pathname } = useLocation()
-
   return (
     <Button
       type={pathname.startsWith(to) ? 'primary' : 'text'}
@@ -33,6 +32,7 @@ const Header = () => {
       <Col>
         <Space>
           <Navigation name="Home" to="/home" />
+          <Navigation name="Liquidity" to="/liquidity" />
           <Navigation name="SPL" to="/spl" />
         </Space>
       </Col>
