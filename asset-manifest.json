@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.css": "/zkswap/static/css/main.4d2edf5d.css",
-    "main.js": "/zkswap/static/js/main.75aed2b0.js",
+    "main.css": "/zkswap/static/css/main.e9f1a0d7.css",
+    "main.js": "/zkswap/static/js/main.e5742299.js",
     "static/js/255.7f7f725b.chunk.js": "/zkswap/static/js/255.7f7f725b.chunk.js",
-    "static/media/logo_sntr.png": "/zkswap/static/media/logo_sntr.da175f6d5d1564b6bc58.png",
     "index.html": "/zkswap/index.html",
-    "main.4d2edf5d.css.map": "/zkswap/static/css/main.4d2edf5d.css.map",
-    "main.75aed2b0.js.map": "/zkswap/static/js/main.75aed2b0.js.map",
+    "main.e9f1a0d7.css.map": "/zkswap/static/css/main.e9f1a0d7.css.map",
+    "main.e5742299.js.map": "/zkswap/static/js/main.e5742299.js.map",
     "255.7f7f725b.chunk.js.map": "/zkswap/static/js/255.7f7f725b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4d2edf5d.css",
-    "static/js/main.75aed2b0.js"
+    "static/css/main.e9f1a0d7.css",
+    "static/js/main.e5742299.js"
   ]
 }
