@@ -2,16 +2,17 @@ import { ChangeEvent, useEffect, useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Row, Col, Card, Input, Typography, Space, Button } from 'antd'
+import CurrentPrice from './currentPrice'
 
 import { PRECISION, usePrice } from 'hooks/usePrice'
-import { numeric } from 'helper/utils'
+import { numeric, sqrt } from 'helper/utils'
 import { useOracle } from 'hooks/useOracle'
 import { AppDispatch, AppState } from 'store'
 import { useAccount } from 'hooks/useAccount'
 import { Direction, setSwapWallet } from 'store/swap.reducer'
 import { swapAB, swapBA } from 'store/oracle.reducer'
 import { transfer } from 'store/ledger.reducer'
-import TokenName from 'components/tokenName'
+import IconSax from 'components/iconsax'
 
 const computeGamma = (curPrice: bigint, newPrice: bigint) => {
   if (!curPrice || !newPrice || curPrice === newPrice)
@@ -21,11 +22,11 @@ const computeGamma = (curPrice: bigint, newPrice: bigint) => {
     }
   if (curPrice < newPrice)
     return {
-      gamma: (curPrice * PRECISION) / newPrice,
+      gamma: sqrt((curPrice * PRECISION * PRECISION) / newPrice),
       reverted: true,
     }
   return {
-    gamma: (newPrice * PRECISION) / curPrice,
+    gamma: sqrt((newPrice * PRECISION * PRECISION) / curPrice),
     reverted: false,
   }
 }
@@ -95,28 +96,18 @@ const SwapPrice = () => {
   return (
     <Card className="card-radius shadowed">
       <Row gutter={[24, 24]} align="middle">
-        <Col>
-          <Space direction="vertical" size={0} style={{ fontSize: 12 }}>
+        <Col span={24}>
+          <Space direction="vertical" size={0}>
+            <CurrentPrice onClick={setPrice} />
             <Typography.Text type="secondary">
-              Cur. Price:{' '}
-              <Typography.Link
-                onClick={() => setPrice(String(Number(p) / Number(PRECISION)))}
-              >
-                {numeric(Number(p) / Number(PRECISION)).format('0.[0000]')}
-              </Typography.Link>{' '}
-              <TokenName publicKey={wallet2.publicKey} />
-              {' / '}
-              <TokenName publicKey={wallet1.publicKey} />
-            </Typography.Text>
-            <Typography.Text type="secondary">
-              Imp. Price:{' '}
+              Impact Price:{' '}
               <span style={{ color: impactColor(impact) }}>
                 {numeric(Math.abs(impact) * 100).format('0.[0000]')}%
               </span>
             </Typography.Text>
           </Space>
         </Col>
-        <Col flex="auto">
+        <Col span={24}>
           <Input
             bordered={false}
             style={{
@@ -133,7 +124,13 @@ const SwapPrice = () => {
           />
         </Col>
         <Col span={24}>
-          <Button type="primary" onClick={onSwap} block>
+          <Button
+            type="primary"
+            onClick={onSwap}
+            icon={<IconSax variant="Bulk" name="Play" />}
+            disabled={!gamma}
+            block
+          >
             Swap
           </Button>
         </Col>
