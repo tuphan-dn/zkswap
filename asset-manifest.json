@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/zkswap/static/css/main.4d2edf5d.css",
-    "main.js": "/zkswap/static/js/main.ef09d97a.js",
+    "main.js": "/zkswap/static/js/main.75aed2b0.js",
     "static/js/255.7f7f725b.chunk.js": "/zkswap/static/js/255.7f7f725b.chunk.js",
     "static/media/logo_sntr.png": "/zkswap/static/media/logo_sntr.da175f6d5d1564b6bc58.png",
     "index.html": "/zkswap/index.html",
     "main.4d2edf5d.css.map": "/zkswap/static/css/main.4d2edf5d.css.map",
-    "main.ef09d97a.js.map": "/zkswap/static/js/main.ef09d97a.js.map",
+    "main.75aed2b0.js.map": "/zkswap/static/js/main.75aed2b0.js.map",
     "255.7f7f725b.chunk.js.map": "/zkswap/static/js/255.7f7f725b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4d2edf5d.css",
-    "static/js/main.ef09d97a.js"
+    "static/js/main.75aed2b0.js"
   ]
 }
