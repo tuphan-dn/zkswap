@@ -1,5 +1,5 @@
 import { Col, Row, Typography, Space, Card } from 'antd'
-import Balance from './balance'
+import Balance from '../../components/balance'
 
 import { Wallet } from 'store/wallet.reducer'
 import { shortenAddress } from 'helper/utils'

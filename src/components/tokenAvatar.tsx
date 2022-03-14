@@ -1,7 +1,7 @@
+import { CSSProperties } from 'react'
 import { PublicKey } from '@solana/web3.js'
 
 import { Avatar } from 'antd'
-import { CSSProperties } from 'react'
 
 const COLORS = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae']
 

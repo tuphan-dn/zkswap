@@ -4,7 +4,7 @@ import { Keypair, PublicKey } from '@solana/web3.js'
 
 import { Row, Col, Input, Space, Button, Divider } from 'antd'
 import IconSax from 'components/iconsax'
-import Balance from './balance'
+import Balance from 'components/balance'
 import NumericInput from 'components/numericInput'
 
 import { AppDispatch, AppState } from 'store'

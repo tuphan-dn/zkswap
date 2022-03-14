@@ -117,7 +117,7 @@ export const withdraw = createAsyncThunk<
     dstAPublicKey: PublicKey
     dstBPublicKey: PublicKey
     srcLPPublicKey: PublicKey
-    withdrawProof: WithdrawalProof
+    withdrawalProof: WithdrawalProof
     transfer: any
     burn: any
   },
@@ -129,13 +129,13 @@ export const withdraw = createAsyncThunk<
       dstAPublicKey,
       dstBPublicKey,
       srcLPPublicKey,
-      withdrawProof,
+      withdrawalProof,
       transfer,
       burn,
     },
     { getState },
   ) => {
-    if (!Withdrawal.verify(withdrawProof))
+    if (!Withdrawal.verify(withdrawalProof))
       throw new Error('Invalid proof of withdrawal')
 
     const {
@@ -158,10 +158,25 @@ export const withdraw = createAsyncThunk<
       dstAmountB,
       srcAmountLP,
       dstAmountLP,
-    } = withdrawProof
-    transfer(srcAmountA, dstAmountA, treasuryAPublicKey, dstAPublicKey)
-    transfer(srcAmountB, dstAmountB, treasuryBPublicKey, dstBPublicKey)
-    burn(srcAmountLP, dstAmountLP, srcLPPublicKey, mintLPPublicKey)
+    } = withdrawalProof
+    transfer({
+      srcAmount: srcAmountA,
+      dstAmount: dstAmountA,
+      srcPublicKey: treasuryAPublicKey,
+      dstPublicKey: dstAPublicKey,
+    })
+    transfer({
+      srcAmount: srcAmountB,
+      dstAmount: dstAmountB,
+      srcPublicKey: treasuryBPublicKey,
+      dstPublicKey: dstBPublicKey,
+    })
+    burn({
+      srcAmount: srcAmountLP,
+      dstAmount: dstAmountLP,
+      srcPublicKey: srcLPPublicKey,
+      mintPublicKey: mintLPPublicKey,
+    })
     // Derive the internal oracle state
     const a = hashmap(
       srcAmountA.C.subtract(srcAmountA.D.multiply(treasuryA.s)).toHex(),

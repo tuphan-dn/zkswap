@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { PublicKey } from '@solana/web3.js'
-import { Point } from 'helper/point'
 
 import { TwistedElGamal } from 'helper/twistedElGamal'
 import { randScalar } from 'helper/utils'
@@ -101,24 +100,21 @@ export const mintTo = createAsyncThunk<
 export const burn = createAsyncThunk<
   LedgerState,
   {
-    amount: bigint
+    srcAmount: TwistedElGamal
+    dstAmount: TwistedElGamal
     srcPublicKey: PublicKey
     mintPublicKey: PublicKey
   },
   { state: any }
 >(
   `${NAME}/burn`,
-  async ({ amount, srcPublicKey, mintPublicKey }, { getState }) => {
+  async (
+    { srcAmount, dstAmount, srcPublicKey, mintPublicKey },
+    { getState },
+  ) => {
     const { ledger } = getState()
     let mint = { ...ledger[mintPublicKey.toBase58()] }
     let account = { ...ledger[srcPublicKey.toBase58()] }
-    const z = randScalar()
-    const srcAmount = TwistedElGamal.build(
-      Point.G.multiply(amount).add(Point.H.multiply(z)),
-      account.acmount.P.multiply(z),
-      account.acmount.P,
-    )
-    const dstAmount = new TwistedElGamal(amount, mint.s)
     account.amount = account.amount.subtract(srcAmount)
     mint.supply = mint.supply.subtract(dstAmount)
     return {
