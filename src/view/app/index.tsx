@@ -18,6 +18,7 @@ import { TwistedElGamal } from 'helper/twistedElGamal'
 import { Point } from 'helper/point'
 import { randScalar } from 'helper/utils'
 import { setLPWallet, Wallet } from 'store/wallet.reducer'
+import ZkSwap from 'view/zkswap'
 
 const SUPPLY = BigInt(10 ** 3)
 
@@ -100,6 +101,7 @@ const App = () => {
           <Col span={24}>
             <Switch>
               <Route exact path="/liquidity" component={Liquidity} />
+              <Route exact path="/swap" component={ZkSwap} />
               <Redirect exact from="*" to="/liquidity" />
             </Switch>
           </Col>
