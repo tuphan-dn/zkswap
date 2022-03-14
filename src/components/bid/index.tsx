@@ -1,12 +1,15 @@
 import { useSelector } from 'react-redux'
 import { AppState } from 'store'
 
-import { Col, Input, Radio, Row, Space, Typography } from 'antd'
+import { Col, Radio, Row, Space, Typography } from 'antd'
 import TokenSelection from 'components/tokenSelection'
 import Balance from 'components/balance'
+import NumericInput from 'components/numericInput'
+import { useState } from 'react'
 
 const Bid = () => {
   const { bid } = useSelector((state: AppState) => state.swap)
+  const [amount, setAmout] = useState<string | number>('')
 
   return (
     <Row gutter={[0, 0]} align="middle">
@@ -14,7 +17,7 @@ const Bid = () => {
         <TokenSelection publicKey={bid.mint}></TokenSelection>
       </Col>
       <Col>
-        <Input
+        <NumericInput
           bordered={false}
           style={{
             textAlign: 'right',
@@ -23,7 +26,8 @@ const Bid = () => {
             padding: 0,
           }}
           placeholder="0"
-          defaultValue={3}
+          value={amount}
+          onChange={(value) => setAmout(value)}
         />
       </Col>
       <Col span={24}>
