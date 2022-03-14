@@ -4,7 +4,6 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 
 import { Row, Col, Affix, Card, Layout } from 'antd'
 import Header from 'view/header'
-import SPL from 'view/spl'
 import Liquidity from 'view/liquidity'
 import Watcher from 'watcher'
 
@@ -101,7 +100,6 @@ const App = () => {
         <Row gutter={[24, 24]}>
           <Col span={24}>
             <Switch>
-              <Route exact path="/spl" component={SPL} />
               <Route exact path="/liquidity" component={Liquidity} />
               <Route exact path="/swap" component={ZkSwap} />
               <Redirect exact from="*" to="/liquidity" />

@@ -12,17 +12,17 @@ import { Account, initializeAccount, transfer } from 'store/ledger.reducer'
 import { TwistedElGamal } from 'helper/twistedElGamal'
 import { Point } from 'helper/point'
 import { randScalar } from 'helper/utils'
+import { Wallet } from 'store/wallet.reducer'
 
-const Transfer = () => {
+export type TransferProps = { wallet: Wallet }
+
+const Transfer = ({ wallet }: TransferProps) => {
   const [amount, setAmount] = useState<string | number>('')
   const [dstAddress, setDstAddress] = useState(
     new Keypair().publicKey.toBase58(),
   )
   const dispatch = useDispatch<AppDispatch>()
-  const {
-    wallet: { wallet1 },
-    ledger,
-  } = useSelector((state: AppState) => state)
+  const { ledger } = useSelector((state: AppState) => state)
 
   const getAccount = useCallback(
     async (publicKey: PublicKey) => {
@@ -30,18 +30,18 @@ const Transfer = () => {
       if (acc.type === 'account') return acc
       const { [publicKey.toBase58()]: re } = (await dispatch(
         initializeAccount({
-          mintPublicKey: wallet1.mint,
+          mintPublicKey: wallet.mint,
           accountPublicKey: publicKey,
         }),
       ).unwrap()) as Record<string, Account>
       return re
     },
-    [dispatch, ledger, wallet1],
+    [dispatch, ledger, wallet],
   )
 
   const onSend = useCallback(async () => {
     if (!amount) return
-    const src = await getAccount(wallet1.publicKey)
+    const src = await getAccount(wallet.publicKey)
     const dst = await getAccount(new PublicKey(dstAddress))
     const m = BigInt(amount)
     const z = randScalar()
@@ -58,27 +58,11 @@ const Transfer = () => {
       }),
     ).unwrap()
     return setAmount('')
-  }, [amount, dispatch, wallet1, dstAddress, getAccount])
+  }, [amount, dispatch, wallet, dstAddress, getAccount])
 
   return (
-    <Row gutter={[24, 24]}>
-      <Col xs={24} md={12}>
-        <NumericInput
-          placeholder="Amount"
-          onChange={(value) => setAmount(value)}
-          value={amount}
-          suffix={
-            <Button
-              type="text"
-              icon={<IconSax name="Send" />}
-              onClick={onSend}
-              disabled={!amount}
-              style={{ marginRight: -7 }}
-            />
-          }
-        />
-      </Col>
-      <Col xs={24} md={12}>
+    <Row gutter={[16, 16]}>
+      <Col span={24}>
         <Input
           value={dstAddress}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -95,6 +79,22 @@ const Transfer = () => {
               type="text"
               icon={<IconSax name="Shuffle" />}
               onClick={() => setDstAddress(new Keypair().publicKey.toBase58())}
+              style={{ marginRight: -7 }}
+            />
+          }
+        />
+      </Col>
+      <Col span={24}>
+        <NumericInput
+          placeholder="Amount"
+          onChange={(value) => setAmount(value)}
+          value={amount}
+          suffix={
+            <Button
+              type="text"
+              icon={<IconSax name="Send" />}
+              onClick={onSend}
+              disabled={!amount}
               style={{ marginRight: -7 }}
             />
           }
