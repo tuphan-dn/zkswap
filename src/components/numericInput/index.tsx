@@ -4,8 +4,8 @@ import { Input, Tooltip, Space, InputProps } from 'antd'
 import IconSax from 'components/iconsax'
 
 export type NumericInputProps = {
-  value: string | number
-  onChange: (value: string | number) => void
+  value?: string | number
+  onChange?: (value: string | number) => void
   max?: number
 } & Omit<InputProps, 'value' | 'onChange'>
 
@@ -15,7 +15,7 @@ const MIN = 0
 const MAX = 10 ** 6
 
 const NumericInput = (
-  { value, onChange, max = MAX, ...props }: NumericInputProps,
+  { value = '', onChange = () => {}, max = MAX, ...props }: NumericInputProps,
   ref: any,
 ) => {
   const [error, setError] = useState('')

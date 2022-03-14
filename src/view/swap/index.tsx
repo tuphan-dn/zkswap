@@ -1,6 +1,6 @@
 import { Row, Col } from 'antd'
 import SwapForm from 'view/swap/swapForm'
-import SwapReview from 'view/swap/swapReview'
+import SwapPrice from 'view/swap/swapPrice'
 
 const Swap = () => {
   return (
@@ -8,10 +8,10 @@ const Swap = () => {
       <Col lg={8} md={12} xs={24}>
         <Row gutter={[24, 24]}>
           <Col span={24}>
-            <SwapForm />
+            <SwapPrice />
           </Col>
           <Col span={24}>
-            <SwapReview />
+            <SwapForm />
           </Col>
         </Row>
       </Col>

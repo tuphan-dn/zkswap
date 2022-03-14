@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { PublicKey } from '@solana/web3.js'
+import { TwistedElGamal } from 'helper/twistedElGamal'
 
 /**
  * Interface & Utility
@@ -14,7 +15,7 @@ export type SwapState = {
 export type Wallet = {
   publicKey?: PublicKey
   mint?: PublicKey
-  amount: number | ''
+  amount?: TwistedElGamal
 }
 
 export enum Direction {
@@ -29,12 +30,8 @@ export enum Direction {
 const NAME = 'swap'
 const initialState: SwapState = {
   direction: Direction.AB,
-  bid: {
-    amount: '',
-  },
-  ask: {
-    amount: '',
-  },
+  bid: {},
+  ask: {},
 }
 
 /**

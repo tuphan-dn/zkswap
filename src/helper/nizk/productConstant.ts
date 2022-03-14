@@ -28,8 +28,8 @@ export const ProductConstant = {
     gamma: bigint,
     rbid: bigint,
     rask: bigint,
-    src: TwistedElGamal,
-    dst: TwistedElGamal,
+    srcPublicKey: Point,
+    dstPublicKey: Point,
     bidTreasury: Account,
     askTreasury: Account,
   ): ProductConstantProof => {
@@ -46,8 +46,8 @@ export const ProductConstant = {
     const r1 = randScalar()
     const srcBidAmount = TwistedElGamal.build(
       Point.G.multiply(bidAmount).add(Point.H.multiply(r1)),
-      src.P.multiply(r1),
-      src.P,
+      srcPublicKey.multiply(r1),
+      srcPublicKey,
     )
     const dstBidAmount = ProductConstant.computeDstBidAmount(
       gamma,
@@ -77,8 +77,8 @@ export const ProductConstant = {
     const r2 = randScalar()
     const dstAskAmount = TwistedElGamal.build(
       Point.G.multiply(askAmount).add(Point.H.multiply(r2)),
-      dst.P.multiply(r2),
-      dst.P,
+      dstPublicKey.multiply(r2),
+      dstPublicKey,
     )
     const equalityAskProof = HybridEquality.prove(
       askTreasury.s,

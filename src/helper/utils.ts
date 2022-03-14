@@ -1,5 +1,6 @@
 import { utils, CURVE } from '@noble/ed25519'
 import { Point } from 'helper/point'
+import numbro from 'numbro'
 
 export const randScalar = (buf?: Uint8Array) => {
   const hex = buf || utils.randomBytes(32)
@@ -49,4 +50,11 @@ export const shortenAddress = (address: string, num = 4, delimiter = '...') => {
     delimiter +
     address.substring(address.length - num, address.length)
   )
+}
+
+export const numeric = (
+  value?: number | string | BigInt,
+): ReturnType<typeof numbro> => {
+  if (!value) return numbro('0')
+  return numbro(value)
 }

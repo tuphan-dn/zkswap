@@ -1,40 +1,19 @@
-import { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { Col, Row, Space, Typography } from 'antd'
 import TokenSelection from 'components/tokenSelection'
 import Balance from 'components/balance'
 import NumericInput from 'components/numericInput'
 
-import { AppDispatch, AppState } from 'store'
-import { Direction, setSwapWallet } from 'store/swap.reducer'
-import { PRECISION, usePrice } from 'hooks/usePrice'
-import { useBalance } from 'hooks/useBalance'
+import { AppState } from 'store'
+import { useAccount } from 'hooks/useAccount'
+import { useAmount } from 'hooks/useAmount'
 
 const Bid = () => {
-  const { direction, bid, ask } = useSelector((state: AppState) => state.swap)
-  const dispatch = useDispatch<AppDispatch>()
+  const { bid } = useSelector((state: AppState) => state.swap)
 
-  const p = usePrice()
-  const balance = useBalance(bid.publicKey)
-
-  const onAmount = useCallback(
-    (bidAmount) => {
-      let askAmount: number | '' = ''
-      if (bidAmount) {
-        if (direction === Direction.AB)
-          askAmount = Number((BigInt(bidAmount) * PRECISION) / p)
-        else askAmount = Number((BigInt(bidAmount) * p) / PRECISION)
-      }
-      return dispatch(
-        setSwapWallet({
-          bid: { ...bid, amount: bidAmount },
-          ask: { ...ask, amount: askAmount },
-        }),
-      )
-    },
-    [dispatch, bid, ask, direction, p],
-  )
+  const account = useAccount(bid.publicKey)
+  const amount = useAmount(account, bid.amount)
 
   return (
     <Row gutter={[0, 0]} align="middle">
@@ -50,9 +29,7 @@ const Bid = () => {
             padding: 0,
           }}
           placeholder="0"
-          value={bid.amount}
-          onChange={onAmount}
-          max={balance}
+          value={amount}
         />
       </Col>
       <Col span={24}>

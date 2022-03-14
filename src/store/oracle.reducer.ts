@@ -4,12 +4,11 @@ import { hashmap } from 'helper/hashmap'
 import {
   Deposit,
   DepositProof,
-  HybridEquality,
-  HybridEqualityProof,
+  ProductConstant,
+  ProductConstantProof,
   Withdrawal,
   WithdrawalProof,
 } from 'helper/nizk'
-import { TwistedElGamal } from 'helper/twistedElGamal'
 import { Account } from './ledger.reducer'
 
 export type OracleState = {
@@ -192,55 +191,63 @@ export const withdraw = createAsyncThunk<
 export const swapAB = createAsyncThunk<
   Partial<OracleState>,
   {
-    gamma: bigint
     srcPublicKey: PublicKey
-    srcAmountA: TwistedElGamal
-    dstAmountA: TwistedElGamal
-    equalityProofA: HybridEqualityProof
     dstPublicKey: PublicKey
-    srcAmountB: TwistedElGamal
-    dstAmountB: TwistedElGamal
-    equalityProofB: HybridEqualityProof
+    productConstantProof: ProductConstantProof
     transfer: any
   },
   { state: any }
 >(
   `${NAME}/swapAB`,
   async (
-    {
-      gamma,
-      srcPublicKey,
-      srcAmountA,
-      dstAmountA,
-      equalityProofA,
-      dstPublicKey,
-      srcAmountB,
-      dstAmountB,
-      equalityProofB,
-      transfer,
-    },
+    { srcPublicKey, dstPublicKey, productConstantProof, transfer },
     { getState },
   ) => {
-    if (!HybridEquality.verify(dstAmountA, srcAmountA, equalityProofA))
-      throw new Error('Invalid proof of amount A')
-    if (!HybridEquality.verify(srcAmountB, dstAmountB, equalityProofB))
-      throw new Error('Invalid proof of amount B')
-
     const {
       oracle: { treasuryAPublicKey, treasuryBPublicKey, ra, rb },
       ledger,
     } = getState()
     const treasuryA = ledger[treasuryAPublicKey.toBase58()] as Account
     const treasuryB = ledger[treasuryBPublicKey.toBase58()] as Account
+    if (
+      !ProductConstant.verify(
+        treasuryA.amount,
+        treasuryB.amount,
+        productConstantProof,
+      )
+    )
+      throw new Error('Invalid product constant proof')
+    const { gamma, srcBidAmount, dstAskAmount, bidAdjustment, askAdjustment } =
+      productConstantProof
+    const dstBidAmount = ProductConstant.computeDstBidAmount(
+      gamma,
+      treasuryA.amount,
+      bidAdjustment,
+    )
+    const srcAskAmount = ProductConstant.computeSrcAskAmount(
+      gamma,
+      treasuryB.amount,
+      askAdjustment,
+    )
     // Execute transactions
-    transfer(srcAmountA, dstAmountA, srcPublicKey, treasuryAPublicKey)
-    transfer(srcAmountB, dstAmountB, treasuryBPublicKey, dstPublicKey)
+    transfer({
+      srcAmount: srcBidAmount,
+      dstAmount: dstBidAmount,
+      srcPublicKey: srcPublicKey,
+      dstPublicKey: treasuryAPublicKey,
+    })
+    transfer({
+      srcAmount: srcAskAmount,
+      dstAmount: dstAskAmount,
+      srcPublicKey: treasuryBPublicKey,
+      dstPublicKey: dstPublicKey,
+    })
     // Derive the internal oracle state
     const a = hashmap(
-      dstAmountA.C.subtract(dstAmountA.D.multiply(treasuryA.s)).toHex(),
+      dstBidAmount.C.subtract(dstBidAmount.D.multiply(treasuryA.s)).toHex(),
     )
     const b = hashmap(
-      srcAmountB.C.subtract(srcAmountB.D.multiply(treasuryB.s)).toHex(),
+      srcAskAmount.C.subtract(srcAskAmount.D.multiply(treasuryB.s)).toHex(),
     )
     if (!a || !b) throw new Error('Cannot solve the discrete log problem')
     return { ra: ra + BigInt(a), rb: rb - BigInt(b) }
@@ -250,61 +257,68 @@ export const swapAB = createAsyncThunk<
 export const swapBA = createAsyncThunk<
   Partial<OracleState>,
   {
-    gamma: bigint
     srcPublicKey: PublicKey
-    srcAmountB: TwistedElGamal
-    dstAmountB: TwistedElGamal
-    equalityProofB: HybridEqualityProof
     dstPublicKey: PublicKey
-    srcAmountA: TwistedElGamal
-    dstAmountA: TwistedElGamal
-    equalityProofA: HybridEqualityProof
+    productConstantProof: ProductConstantProof
     transfer: any
   },
   { state: any }
 >(
   `${NAME}/swapBA`,
   async (
-    {
-      gamma,
-      srcPublicKey,
-      srcAmountB,
-      dstAmountB,
-      equalityProofB,
-      dstPublicKey,
-      srcAmountA,
-      dstAmountA,
-      equalityProofA,
-      transfer,
-    },
+    { srcPublicKey, dstPublicKey, productConstantProof, transfer },
     { getState },
   ) => {
-    if (!HybridEquality.verify(dstAmountB, srcAmountB, equalityProofB))
-      throw new Error('Invalid proof of amount B')
-    if (!HybridEquality.verify(srcAmountA, dstAmountA, equalityProofA))
-      throw new Error('Invalid proof of amount A')
-
     const {
       oracle: { treasuryAPublicKey, treasuryBPublicKey, ra, rb },
       ledger,
     } = getState()
     const treasuryA = ledger[treasuryAPublicKey.toBase58()] as Account
     const treasuryB = ledger[treasuryBPublicKey.toBase58()] as Account
-    // Execute transactions
-    transfer(srcAmountB, dstAmountB, srcPublicKey, treasuryBPublicKey)
-    transfer(srcAmountA, dstAmountA, treasuryAPublicKey, dstPublicKey)
-    // Derive the internal oracle state
-    const a = hashmap(
-      srcAmountA.C.subtract(srcAmountA.D.multiply(treasuryA.s)).toHex(),
+    if (
+      !ProductConstant.verify(
+        treasuryB.amount,
+        treasuryA.amount,
+        productConstantProof,
+      )
     )
+      throw new Error('Invalid product constant proof')
+    const { gamma, srcBidAmount, dstAskAmount, bidAdjustment, askAdjustment } =
+      productConstantProof
+    const dstBidAmount = ProductConstant.computeDstBidAmount(
+      gamma,
+      treasuryB.amount,
+      bidAdjustment,
+    )
+    const srcAskAmount = ProductConstant.computeSrcAskAmount(
+      gamma,
+      treasuryA.amount,
+      askAdjustment,
+    )
+    // Execute transactions
+    transfer({
+      srcAmount: srcBidAmount,
+      dstAmount: dstBidAmount,
+      srcPublicKey: srcPublicKey,
+      dstPublicKey: treasuryBPublicKey,
+    })
+    transfer({
+      srcAmount: srcAskAmount,
+      dstAmount: dstAskAmount,
+      srcPublicKey: treasuryAPublicKey,
+      dstPublicKey: dstPublicKey,
+    })
+    // Derive the internal oracle state
     const b = hashmap(
-      dstAmountB.C.subtract(dstAmountB.D.multiply(treasuryB.s)).toHex(),
+      dstBidAmount.C.subtract(dstBidAmount.D.multiply(treasuryB.s)).toHex(),
+    )
+    const a = hashmap(
+      srcAskAmount.C.subtract(srcAskAmount.D.multiply(treasuryA.s)).toHex(),
     )
     if (!a || !b) throw new Error('Cannot solve the discrete log problem')
     return { ra: ra - BigInt(a), rb: rb + BigInt(b) }
   },
 )
-
 /**
  * Usual procedure
  */
