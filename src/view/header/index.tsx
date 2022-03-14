@@ -2,6 +2,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 
 import { Row, Col, Space, Button, Typography } from 'antd'
 import IconSax from 'components/iconsax'
+import Debug from './debug'
 
 export type NavigationProps = { name: string; to: string }
 
@@ -23,7 +24,7 @@ const Header = () => {
     <Row gutter={[24, 24]} wrap={false} align="middle">
       <Col flex="auto">
         <Space style={{ color: '#FF8A65' }}>
-          <IconSax variant="Bold" name="Shield" style={{ fontSize: 32 }} />
+          <IconSax variant="Bulk" name="Shield" style={{ fontSize: 32 }} />
           <Typography.Title level={5} style={{ color: 'inherit' }}>
             zkSwap
           </Typography.Title>
@@ -31,10 +32,10 @@ const Header = () => {
       </Col>
       <Col>
         <Space>
-          <Navigation name="Home" to="/home" />
           <Navigation name="Liquidity" to="/liquidity" />
           <Navigation name="SPL" to="/spl" />
           <Navigation name="Swap" to="/swap" />
+          <Debug />
         </Space>
       </Col>
     </Row>
