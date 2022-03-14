@@ -4,6 +4,7 @@ import NumericInput from 'components/numericInput'
 import Balance from 'components/balance'
 
 import { Wallet } from 'store/wallet.reducer'
+import { useBalance } from 'hooks/useBalance'
 
 export type AmountProps = {
   wallet?: Wallet
@@ -12,6 +13,8 @@ export type AmountProps = {
 }
 
 const Amount = ({ wallet, value, onChange }: AmountProps) => {
+  const balance = useBalance(wallet?.publicKey)
+
   return (
     <Row gutter={[8, 8]} justify="end">
       <Col span={24}>
@@ -19,6 +22,7 @@ const Amount = ({ wallet, value, onChange }: AmountProps) => {
           size="large"
           value={value}
           onChange={onChange}
+          max={balance}
           prefix={
             <TokenAvatar style={{ marginRight: 7 }} publicKey={wallet?.mint} />
           }
