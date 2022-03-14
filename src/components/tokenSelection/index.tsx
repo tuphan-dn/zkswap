@@ -1,10 +1,14 @@
-import { Avatar, Col, Modal, Row, Space, Typography } from 'antd'
 import { Fragment, useState } from 'react'
+
+import { Col, Modal, Row, Space, Typography } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 import ListSelection from './listSelection'
+import TokenAvatar from 'components/tokenAvatar'
+import TokenName from 'components/tokenName'
 
-const TokenSelection = ({ url }: { url: string }) => {
+const TokenSelection = ({ publicKey }: { publicKey?: any }) => {
   const [visible, setVisible] = useState(false)
+
   return (
     <Fragment>
       <Space
@@ -12,13 +16,14 @@ const TokenSelection = ({ url }: { url: string }) => {
         className="token-select"
         onClick={() => setVisible(true)}
       >
-        <Avatar
-          src={url}
-          size="small"
-          style={{ backgroundColor: '#2D3355', border: 'none' }}
-        />
+        <TokenAvatar
+          publicKey={publicKey}
+          style={{ border: 'none' }}
+        ></TokenAvatar>
 
-        <Typography.Text type="secondary">USDC</Typography.Text>
+        <Typography.Text type="secondary">
+          <TokenName publicKey={publicKey} />
+        </Typography.Text>
         <Typography.Text type="secondary">
           <DownOutlined style={{ fontSize: '10px' }} />
         </Typography.Text>

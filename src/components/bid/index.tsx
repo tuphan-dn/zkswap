@@ -1,12 +1,16 @@
+import { useSelector } from 'react-redux'
+import { AppState } from 'store'
+
 import { Col, Input, Radio, Row, Space, Typography } from 'antd'
 import TokenSelection from 'components/tokenSelection'
-import LogoSNTR from 'static/images/logo_sntr.png'
 
 const Bid = () => {
+  const { bid } = useSelector((state: AppState) => state.swap)
+
   return (
     <Row gutter={[0, 0]} align="middle">
       <Col flex="auto">
-        <TokenSelection url={LogoSNTR}></TokenSelection>
+        <TokenSelection publicKey={bid.mint}></TokenSelection>
       </Col>
       <Col>
         <Input

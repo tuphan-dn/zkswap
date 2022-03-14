@@ -1,12 +1,16 @@
+import { AppState } from 'store'
+import { useSelector } from 'react-redux'
+
 import { Col, Input, Row, Space, Typography } from 'antd'
 import TokenSelection from 'components/tokenSelection'
-import LogoUSDT from 'static/images/logo_usdt.png'
 
 const Ask = () => {
+  const { ask } = useSelector((state: AppState) => state.swap)
+  
   return (
     <Row gutter={[0, 0]} align="middle">
       <Col flex="auto">
-        <TokenSelection url={LogoUSDT}></TokenSelection>
+        <TokenSelection publicKey={ask.mint}></TokenSelection>
       </Col>
       <Col>
         <Input
