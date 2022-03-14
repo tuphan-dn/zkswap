@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { PublicKey } from '@solana/web3.js'
+
 /**
  * Interface & Utility
  */
 
 export type SwapState = {
+  direction: Direction
   bid: Wallet
   ask: Wallet
 }
@@ -14,12 +16,18 @@ export type Wallet = {
   mint?: PublicKey
 }
 
+export enum Direction {
+  AB,
+  BA,
+}
+
 /**
  * Store constructor
  */
 
 const NAME = 'swap'
 const initialState: SwapState = {
+  direction: Direction.AB,
   bid: {},
   ask: {},
 }
@@ -30,8 +38,8 @@ const initialState: SwapState = {
 
 export const setSwapWallet = createAsyncThunk(
   `${NAME}/setSwapWallet`,
-  async ({ wallet1, wallet2 }: { wallet1: Wallet; wallet2: Wallet }) => {
-    return { bid: wallet1, ask: wallet2 }
+  async (state: SwapState) => {
+    return state
   },
 )
 
