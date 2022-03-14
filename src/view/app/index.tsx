@@ -7,6 +7,7 @@ import Header from 'view/header'
 import Liquidity from 'view/liquidity'
 import Swap from 'view/swap'
 import Watcher from 'watcher'
+import Approval from 'view/approval'
 
 import { AppDispatch, AppState } from 'store'
 import {
@@ -88,6 +89,7 @@ const App = () => {
       {/* Header */}
       <Affix>
         <Card
+          className="shadowed"
           style={{ borderRadius: '0px 0px 16px 16px' }}
           bodyStyle={{ padding: 16 }}
           bordered={false}
@@ -96,7 +98,7 @@ const App = () => {
         </Card>
       </Affix>
       {/* Body */}
-      <Layout style={{ padding: 16 }}>
+      <Layout style={{ padding: 24 }}>
         <Row gutter={[24, 24]}>
           <Col span={24}>
             <Switch>
@@ -107,6 +109,8 @@ const App = () => {
           </Col>
         </Row>
       </Layout>
+      {/* In-Background Run Jobs */}
+      <Approval />
       <Watcher />
     </Layout>
   )

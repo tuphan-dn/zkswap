@@ -4,7 +4,7 @@ import Review from './review'
 
 const SwapReview = () => {
   return (
-    <Card bordered={false} className="zkswap-card">
+    <Card bordered={false} className="zkswap-card shadowed">
       <Row gutter={[24, 24]}>
         <Col span={24}>
           <Typography.Title level={5}>Review & Swap</Typography.Title>

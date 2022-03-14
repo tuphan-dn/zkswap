@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { render } from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
 import App from 'view/app'
@@ -13,9 +13,9 @@ import 'static/styles/index.less'
 render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <HashRouter>
         <App />
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
   </StrictMode>,
   document.getElementById('root'),
