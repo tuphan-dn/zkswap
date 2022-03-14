@@ -2,7 +2,7 @@ import { Card, Row, Col } from 'antd'
 import Settings from 'components/settings'
 import ZkswapInfo from 'components/zkswapInfo'
 
-const ZkSwapForm = () => {
+const SwapForm = () => {
   return (
     <Card bordered={false} className="zkswap-card" bodyStyle={{ padding: 0 }}>
       <Row>
@@ -22,4 +22,4 @@ const ZkSwapForm = () => {
   )
 }
 
-export default ZkSwapForm
+export default SwapForm

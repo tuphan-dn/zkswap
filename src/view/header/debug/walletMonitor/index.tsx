@@ -1,20 +1,20 @@
-import { PublicKey } from '@solana/web3.js'
-
 import { Card, Col, Row, Space, Typography } from 'antd'
+import TokenAvatar from 'components/tokenAvatar'
+import Transfer from './transfer'
 
 import { useBalance } from 'hooks/useBalance'
 import { useAccount } from 'hooks/useAccount'
 import { shortenAddress } from 'helper/utils'
-import TokenAvatar from 'components/tokenAvatar'
+import { Wallet } from 'store/wallet.reducer'
 
-export type WalletMonitorProps = { publicKey: PublicKey }
+export type WalletMonitorProps = { wallet: Wallet }
 
-const WalletMonitor = ({ publicKey }: WalletMonitorProps) => {
-  const account = useAccount(publicKey)
-  const balance = useBalance(publicKey)
+const WalletMonitor = ({ wallet }: WalletMonitorProps) => {
+  const account = useAccount(wallet.publicKey)
+  const balance = useBalance(wallet.publicKey)
 
   return (
-    <Card>
+    <Card bodyStyle={{ padding: 16 }}>
       <Row gutter={[24, 24]}>
         <Col span={24}>
           <Typography.Title level={3}>Wallet Monitoring</Typography.Title>
@@ -33,6 +33,9 @@ const WalletMonitor = ({ publicKey }: WalletMonitorProps) => {
               <TokenAvatar publicKey={account?.mint} />
             </Space>
           </Space>
+        </Col>
+        <Col span={24}>
+          <Transfer wallet={wallet} />
         </Col>
       </Row>
     </Card>

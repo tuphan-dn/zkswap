@@ -2,7 +2,7 @@ import { Card, Row, Col, Typography, Button } from 'antd'
 import Price from './price'
 import Review from './review'
 
-const ZkSwapReview = () => {
+const SwapReview = () => {
   return (
     <Card bordered={false} className="zkswap-card">
       <Row gutter={[24, 24]}>
@@ -11,14 +11,10 @@ const ZkSwapReview = () => {
         </Col>
         <Col span={24}>
           <Row gutter={[12, 12]}>
-            <Review
-              title={'Price impact'}
-              value={'0%'}
-              color={'#14E041'}
-            ></Review>
-            <Review title={'Price'} value={<Price></Price>}></Review>
-            <Review title={'Slippage Tolerance'} value={'100%'}></Review>
-            <Review title={'Route'} value={''}></Review>
+            <Review title={'Price impact'} value={'0%'} color={'#14E041'} />
+            <Review title={'Price'} value={<Price />} />
+            <Review title={'Slippage Tolerance'} value={'100%'} />
+            <Review title={'Route'} value={''} />
           </Row>
         </Col>
         <Col span={24}>
@@ -31,4 +27,4 @@ const ZkSwapReview = () => {
   )
 }
 
-export default ZkSwapReview
+export default SwapReview
