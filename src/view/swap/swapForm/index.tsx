@@ -1,6 +1,6 @@
 import { Card, Row, Col } from 'antd'
 import Settings from 'components/settings'
-import ZkswapInfo from 'components/zkswapInfo'
+import SwapInfo from 'components/swapInfo'
 
 const SwapForm = () => {
   return (
@@ -15,7 +15,7 @@ const SwapForm = () => {
           </Row>
         </Col>
         <Col span={24}>
-          <ZkswapInfo />
+          <SwapInfo />
         </Col>
       </Row>
     </Card>

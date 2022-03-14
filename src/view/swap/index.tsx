@@ -1,6 +1,6 @@
 import { Row, Col } from 'antd'
-import SwapForm from 'components/swapForm'
-import SwapReview from 'components/swapReview'
+import SwapForm from 'view/swap/swapForm'
+import SwapReview from 'view/swap/swapReview'
 
 const Swap = () => {
   return (

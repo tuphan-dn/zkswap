@@ -5,6 +5,7 @@ import ui from './ui.reducer'
 import ledger from './ledger.reducer'
 import oracle from './oracle.reducer'
 import wallet from './wallet.reducer'
+import swap from './swap.reducer'
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -15,6 +16,7 @@ const store = configureStore({
     ledger,
     oracle,
     wallet,
+    swap,
   },
 })
 
