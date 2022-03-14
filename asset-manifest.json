@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.66906264.css",
-    "main.js": "/static/js/main.de472b7e.js",
-    "static/js/787.e373a079.chunk.js": "/static/js/787.e373a079.chunk.js",
+    "main.css": "/static/css/main.4d2edf5d.css",
+    "main.js": "/static/js/main.366ee557.js",
+    "static/js/255.7f7f725b.chunk.js": "/static/js/255.7f7f725b.chunk.js",
+    "static/media/logo_sntr.png": "/static/media/logo_sntr.da175f6d5d1564b6bc58.png",
     "index.html": "/index.html",
-    "main.66906264.css.map": "/static/css/main.66906264.css.map",
-    "main.de472b7e.js.map": "/static/js/main.de472b7e.js.map",
-    "787.e373a079.chunk.js.map": "/static/js/787.e373a079.chunk.js.map"
+    "main.4d2edf5d.css.map": "/static/css/main.4d2edf5d.css.map",
+    "main.366ee557.js.map": "/static/js/main.366ee557.js.map",
+    "255.7f7f725b.chunk.js.map": "/static/js/255.7f7f725b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.66906264.css",
-    "static/js/main.de472b7e.js"
+    "static/css/main.4d2edf5d.css",
+    "static/js/main.366ee557.js"
   ]
 }
