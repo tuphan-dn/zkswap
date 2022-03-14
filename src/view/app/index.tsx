@@ -7,6 +7,7 @@ import Header from 'view/header'
 import Liquidity from 'view/liquidity'
 import Swap from 'view/swap'
 import Watcher from 'watcher'
+import Approval from 'view/approval'
 
 import { AppDispatch, AppState } from 'store'
 import {
@@ -108,6 +109,8 @@ const App = () => {
           </Col>
         </Row>
       </Layout>
+      {/* In-Background Run Jobs */}
+      <Approval />
       <Watcher />
     </Layout>
   )
