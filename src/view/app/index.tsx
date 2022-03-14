@@ -88,6 +88,7 @@ const App = () => {
       {/* Header */}
       <Affix>
         <Card
+          className="shadowed"
           style={{ borderRadius: '0px 0px 16px 16px' }}
           bodyStyle={{ padding: 16 }}
           bordered={false}
@@ -96,7 +97,7 @@ const App = () => {
         </Card>
       </Affix>
       {/* Body */}
-      <Layout style={{ padding: 16 }}>
+      <Layout style={{ padding: 24 }}>
         <Row gutter={[24, 24]}>
           <Col span={24}>
             <Switch>
