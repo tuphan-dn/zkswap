@@ -2,7 +2,7 @@ import { ChangeEvent, useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Keypair, PublicKey } from '@solana/web3.js'
 
-import { Row, Col, Input, Space, Button, Divider } from 'antd'
+import { Row, Col, Input, Space, Button, Divider, Typography } from 'antd'
 import IconSax from 'components/iconsax'
 import Balance from 'components/balance'
 import NumericInput from 'components/numericInput'
@@ -61,7 +61,10 @@ const Transfer = ({ wallet }: TransferProps) => {
   }, [amount, dispatch, wallet, dstAddress, getAccount])
 
   return (
-    <Row gutter={[16, 16]}>
+    <Row gutter={[8, 8]}>
+      <Col span={24}>
+        <Typography.Text type="secondary">Transfer Test</Typography.Text>
+      </Col>
       <Col span={24}>
         <Input
           value={dstAddress}

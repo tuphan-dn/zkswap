@@ -14,7 +14,7 @@ const WalletMonitor = ({ wallet }: WalletMonitorProps) => {
   const balance = useBalance(wallet.publicKey)
 
   return (
-    <Card>
+    <Card bodyStyle={{ padding: 16 }}>
       <Row gutter={[24, 24]}>
         <Col span={24}>
           <Typography.Title level={3}>Wallet Monitoring</Typography.Title>

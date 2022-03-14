@@ -81,7 +81,7 @@ const OracleMonitor = () => {
   ])
 
   return (
-    <Card>
+    <Card bodyStyle={{ padding: 16 }}>
       <Row gutter={[24, 24]}>
         <Col span={24}>
           <Typography.Title level={3}>Oracle Monitoring</Typography.Title>

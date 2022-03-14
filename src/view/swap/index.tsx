@@ -1,20 +1,19 @@
 import { Row, Col } from 'antd'
+import SwapForm from 'components/swapForm'
+import SwapReview from 'components/swapReview'
 
-import ZkSwapForm from 'components/zkswapForm'
-import ZkSwapReview from 'components/zkSwapReview'
-
-const ZkSwap = () => {
+const Swap = () => {
   return (
     <Row gutter={[24, 24]}>
-      <Col span={24} >
+      <Col span={24}>
         <Row gutter={[24, 24]} justify="center">
           <Col lg={8} md={12} xs={24}>
             <Row gutter={[24, 24]}>
               <Col span={24}>
-                <ZkSwapForm></ZkSwapForm>
+                <SwapForm />
               </Col>
               <Col span={24}>
-                <ZkSwapReview />
+                <SwapReview />
               </Col>
             </Row>
           </Col>
@@ -24,4 +23,4 @@ const ZkSwap = () => {
   )
 }
 
-export default ZkSwap
+export default Swap

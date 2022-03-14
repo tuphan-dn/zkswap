@@ -5,6 +5,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { Row, Col, Affix, Card, Layout } from 'antd'
 import Header from 'view/header'
 import Liquidity from 'view/liquidity'
+import Swap from 'view/swap'
 import Watcher from 'watcher'
 
 import { AppDispatch, AppState } from 'store'
@@ -18,7 +19,6 @@ import { TwistedElGamal } from 'helper/twistedElGamal'
 import { Point } from 'helper/point'
 import { randScalar } from 'helper/utils'
 import { setLPWallet, Wallet } from 'store/wallet.reducer'
-import ZkSwap from 'view/zkswap'
 
 const SUPPLY = BigInt(10 ** 3)
 
@@ -101,8 +101,8 @@ const App = () => {
           <Col span={24}>
             <Switch>
               <Route exact path="/liquidity" component={Liquidity} />
-              <Route exact path="/swap" component={ZkSwap} />
-              <Redirect exact from="*" to="/liquidity" />
+              <Route exact path="/swap" component={Swap} />
+              <Redirect exact from="*" to="/swap" />
             </Switch>
           </Col>
         </Row>
