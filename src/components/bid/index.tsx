@@ -1,15 +1,22 @@
-import { useSelector } from 'react-redux'
-import { AppState } from 'store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, AppState } from 'store'
 
 import { Col, Radio, Row, Space, Typography } from 'antd'
 import TokenSelection from 'components/tokenSelection'
 import Balance from 'components/balance'
 import NumericInput from 'components/numericInput'
-import { useState } from 'react'
+
+import { setAmountWallet } from 'store/swap.reducer'
 
 const Bid = () => {
   const { bid } = useSelector((state: AppState) => state.swap)
-  const [amount, setAmout] = useState<string | number>('')
+  const dispatch = useDispatch<AppDispatch>()
+
+  const onChangeAmount = (value: any) => {
+    dispatch(
+      setAmountWallet({ type: 'bid', wallet: { ...bid, amount: value } }),
+    )
+  }
 
   return (
     <Row gutter={[0, 0]} align="middle">
@@ -26,8 +33,10 @@ const Bid = () => {
             padding: 0,
           }}
           placeholder="0"
-          value={amount}
-          onChange={(value) => setAmout(value)}
+          value={bid.amount || ''}
+          onChange={(value) => {
+            onChangeAmount(value)
+          }}
         />
       </Col>
       <Col span={24}>

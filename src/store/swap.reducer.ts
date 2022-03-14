@@ -14,6 +14,7 @@ export type SwapState = {
 export type Wallet = {
   publicKey?: PublicKey
   mint?: PublicKey
+  amount?: number
 }
 
 export enum Direction {
@@ -43,6 +44,13 @@ export const setSwapWallet = createAsyncThunk(
   },
 )
 
+export const setAmountWallet = createAsyncThunk(
+  `${NAME}/setAmountWallet`,
+  async ({ type, wallet }: { type: string; wallet: Wallet }) => {
+    return { [`${type}`]: wallet }
+  },
+)
+
 /**
  * Usual procedure
  */
@@ -52,10 +60,15 @@ const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) =>
-    void builder.addCase(
-      setSwapWallet.fulfilled,
-      (state, { payload }) => void Object.assign(state, payload),
-    ),
+    void builder
+      .addCase(
+        setSwapWallet.fulfilled,
+        (state, { payload }) => void Object.assign(state, payload),
+      )
+      .addCase(
+        setAmountWallet.fulfilled,
+        (state, { payload }) => void Object.assign(state, payload),
+      ),
 })
 
 export default slice.reducer
