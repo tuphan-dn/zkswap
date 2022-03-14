@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { Col, Input, Row, Space, Typography } from 'antd'
 import TokenSelection from 'components/tokenSelection'
+import Balance from 'components/balance'
 
 const Ask = () => {
   const { ask } = useSelector((state: AppState) => state.swap)
@@ -31,9 +32,8 @@ const Ask = () => {
             <Space className="caption">
               <Typography.Text type="secondary">Available:</Typography.Text>
               <Typography.Text type="secondary" style={{ cursor: 'pointer' }}>
-                0
+              <Balance publicKey={ask.publicKey} />
               </Typography.Text>
-              <Typography.Text type="secondary">USDC</Typography.Text>
             </Space>
           </Col>
         </Row>

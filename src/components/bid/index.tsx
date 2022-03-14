@@ -3,6 +3,7 @@ import { AppState } from 'store'
 
 import { Col, Input, Radio, Row, Space, Typography } from 'antd'
 import TokenSelection from 'components/tokenSelection'
+import Balance from 'components/balance'
 
 const Bid = () => {
   const { bid } = useSelector((state: AppState) => state.swap)
@@ -31,9 +32,8 @@ const Bid = () => {
             <Space className="caption">
               <Typography.Text type="secondary">Available:</Typography.Text>
               <Typography.Text type="secondary" style={{ cursor: 'pointer' }}>
-                0
+                <Balance publicKey={bid.publicKey} />
               </Typography.Text>
-              <Typography.Text type="secondary">USDC</Typography.Text>
             </Space>
           </Col>
           <Col>
@@ -46,7 +46,7 @@ const Bid = () => {
                   </Typography.Text>
                 </Space>
                 <Space size={4} direction="vertical">
-                  <Radio.Button className="percent-btn" value={0}/>
+                  <Radio.Button className="percent-btn" value={0} />
                   <Typography.Text type="secondary" className="caption">
                     100%
                   </Typography.Text>
