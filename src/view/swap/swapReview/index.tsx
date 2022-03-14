@@ -13,8 +13,6 @@ const SwapReview = () => {
           <Row gutter={[12, 12]}>
             <Review title={'Price impact'} value={'0%'} color={'#14E041'} />
             <Review title={'Price'} value={<Price />} />
-            <Review title={'Slippage Tolerance'} value={'100%'} />
-            <Review title={'Route'} value={''} />
           </Row>
         </Col>
         <Col span={24}>
