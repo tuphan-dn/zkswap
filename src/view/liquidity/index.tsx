@@ -5,7 +5,7 @@ import RemoveLiquidity from './removeLiquidity'
 const Liquidity = () => {
   return (
     <Row gutter={[24, 24]} justify="center">
-      <Col span={12}>
+      <Col lg={8} md={12} xs={24}>
         <Tabs defaultActiveKey="add-liquidity">
           <Tabs.TabPane key="add-liquidity" tab="Deposit">
             <AddLiquidity />

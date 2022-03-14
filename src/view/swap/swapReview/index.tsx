@@ -17,7 +17,7 @@ const SwapReview = () => {
         </Col>
         <Col span={24}>
           <Button type="primary" disabled={true} block>
-            Review & Swap
+            Swap
           </Button>
         </Col>
       </Row>

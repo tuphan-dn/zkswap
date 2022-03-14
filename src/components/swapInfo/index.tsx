@@ -7,19 +7,29 @@ import IconSax from 'components/iconsax'
 import Bid from 'components/bid'
 import Ask from 'components/ask'
 
-import { setSwapWallet } from 'store/swap.reducer'
+import { Direction, setSwapWallet } from 'store/swap.reducer'
 
 const SwapInfo = () => {
   const { wallet1, wallet2 } = useSelector((state: AppState) => state.wallet)
-  const { bid, ask } = useSelector((state: AppState) => state.swap)
+  const { direction } = useSelector((state: AppState) => state.swap)
   const dispatch = useDispatch<AppDispatch>()
 
   const swapWallet = useCallback(() => {
-    dispatch(setSwapWallet({ wallet1: ask, wallet2: bid }))
-  }, [ask, bid, dispatch])
+    if (direction === Direction.AB)
+      return dispatch(
+        setSwapWallet({ direction: Direction.BA, bid: wallet2, ask: wallet1 }),
+      )
+    else {
+      return dispatch(
+        setSwapWallet({ direction: Direction.AB, bid: wallet1, ask: wallet2 }),
+      )
+    }
+  }, [direction, wallet1, wallet2, dispatch])
 
   useEffect(() => {
-    dispatch(setSwapWallet({ wallet1, wallet2 }))
+    dispatch(
+      setSwapWallet({ direction: Direction.AB, bid: wallet1, ask: wallet2 }),
+    )
   }, [dispatch, wallet1, wallet2])
 
   return (
