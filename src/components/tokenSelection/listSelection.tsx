@@ -1,5 +1,5 @@
 import { Row, Col, Typography, Divider, Input, Card, Space, Avatar } from 'antd'
-import { SearchOutlined, DownOutlined } from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons'
 
 const ListSelection = () => {
   return (
@@ -12,7 +12,12 @@ const ListSelection = () => {
       </Col>
       <Col span={24}>
         <Card className="search" bodyStyle={{ padding: 0 }} bordered={false}>
-          <Input placeholder="Search" suffix={<SearchOutlined />} />
+          <Input
+            placeholder="Search"
+            suffix={<SearchOutlined />}
+            size="large"
+            bordered={false}
+          />
         </Card>
       </Col>
       <Col span={24}>
@@ -21,7 +26,7 @@ const ListSelection = () => {
             <Card className="search" bodyStyle={{ padding: 0 }}>
               <Row gutter={[24, 24]}>
                 <Col span={24}>
-                  <Space className="token-select">
+                  <Space className="token-select" style={{ padding: '8px' }}>
                     <Avatar
                       src={
                         'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/3SghkPdBSrpF9bzdAy5LwR4nGgFbqNcC6ZSq8vtZdj91/logo.png'
@@ -31,7 +36,10 @@ const ListSelection = () => {
 
                     <Typography.Text>USDC</Typography.Text>
                     <Divider type="vertical" style={{ margin: 0 }} />
-                    <Typography.Text type="secondary">
+                    <Typography.Text
+                      type="secondary"
+                      style={{ fontSize: '12px' }}
+                    >
                       EveryOne Coin
                     </Typography.Text>
                   </Space>
