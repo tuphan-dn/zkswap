@@ -1,5 +1,5 @@
 import { Card, Row, Col } from 'antd'
-import SwapInfo from 'components/swapInfo'
+import SwapInfo from 'view/swap/swapInfo'
 
 const SwapForm = () => {
   return (

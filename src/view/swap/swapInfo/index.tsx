@@ -37,7 +37,7 @@ const SwapInfo = () => {
       <Col
         span={24}
         className="zkswap-bid"
-        style={{ padding: '6px 24px 16px' }}
+        style={{ padding: '16px 24px 16px' }}
       >
         <Bid></Bid>
       </Col>
