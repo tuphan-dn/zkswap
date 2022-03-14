@@ -16,8 +16,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "REACT_APP_ENV=development craco start",
-    "build": "REACT_APP_ENV=production craco build",
+    "start": "REACT_APP_ENV=development craco --max_old_space_size=4096 start",
+    "build": "REACT_APP_ENV=production craco --max_old_space_size=4096 build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "test": "craco test"
