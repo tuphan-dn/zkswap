@@ -96,6 +96,7 @@ export const Deposit = {
     const HE1 = HybridEquality.prove(s1, r1_, srcAmountA, dstAmountA)
     const HE2 = HybridEquality.prove(s2, r2_, srcAmountB, dstAmountB)
     const HE3 = HybridEquality.prove(s3, r3_, dstAmountLP, srcAmountLP)
+
     return {
       srcAmountA,
       srcAmountB,
@@ -111,6 +112,7 @@ export const Deposit = {
       HE3,
     }
   },
+
   verify: (proof: DepositProof) => {
     let ok = true
     const {

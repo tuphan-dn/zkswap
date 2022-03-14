@@ -5,7 +5,7 @@ export type TokenNameProps = {
 }
 
 const TokenName = ({ publicKey }: TokenNameProps) => {
-  const tokenName = publicKey?.toBase58().substring(0, 2) || '??'
+  const tokenName = publicKey?.toBase58().substring(0, 4) || '??'
   return <span>{tokenName}</span>
 }
 

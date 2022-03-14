@@ -1,31 +1,22 @@
-import { Fragment } from 'react'
-
 import { Space, Typography } from 'antd'
-import { DownOutlined } from '@ant-design/icons'
+import IconSax from 'components/iconsax'
 import TokenAvatar from 'components/tokenAvatar'
 import TokenName from 'components/tokenName'
+import { CSSProperties } from 'react'
 
-const TokenSelection = ({ publicKey }: { publicKey?: any }) => {
+export type TokenSelectionProps = { publicKey?: any; style?: CSSProperties }
 
+const TokenSelection = ({ publicKey, style }: TokenSelectionProps) => {
   return (
-    <Fragment>
-      <Space
-        style={{ boxShadow: '0 4px 40px #2124332e' }}
-        className="token-select"
-      >
-        <TokenAvatar
-          publicKey={publicKey}
-          style={{ border: 'none' }}
-        ></TokenAvatar>
-
-        <Typography.Text type="secondary">
-          <TokenName publicKey={publicKey} />
-        </Typography.Text>
-        <Typography.Text type="secondary">
-          <DownOutlined style={{ fontSize: '10px' }} />
-        </Typography.Text>
-      </Space>
-    </Fragment>
+    <Space className="token-select shadowed" style={style}>
+      <TokenAvatar publicKey={publicKey} style={{ border: 'none' }} />
+      <Typography.Text type="secondary">
+        <TokenName publicKey={publicKey} />
+      </Typography.Text>
+      <Typography.Text type="secondary">
+        <IconSax variant="Bulk" name="ArrowDown2" />
+      </Typography.Text>
+    </Space>
   )
 }
 

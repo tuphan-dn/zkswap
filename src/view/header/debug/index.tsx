@@ -18,7 +18,13 @@ const Debug = () => {
     <Fragment>
       <Button
         type="text"
-        icon={<IconSax variant="Bulk" name="ShieldSearch" />}
+        icon={
+          <IconSax
+            style={{ fontSize: 20 }}
+            variant="Bulk"
+            name="ShieldSearch"
+          />
+        }
         onClick={() => setVisible(true)}
       />
       <Drawer

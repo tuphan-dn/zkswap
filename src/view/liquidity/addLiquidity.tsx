@@ -111,7 +111,7 @@ const AddLiquidity = () => {
           >
             <Row gutter={[16, 16]}>
               <Col span={24}>
-                <Row gutter={[8, 8]} wrap={false}>
+                <Row gutter={[8, 8]} wrap={false} align="middle">
                   <Col flex="auto">
                     <Typography.Title level={3} type="secondary">
                       LP
@@ -123,7 +123,7 @@ const AddLiquidity = () => {
                 </Row>
               </Col>
               <Col span={24}>
-                <Row gutter={[8, 8]} wrap={false}>
+                <Row gutter={[8, 8]} wrap={false} align="middle">
                   <Col flex="auto">
                     <Typography.Text type="secondary">
                       Your Current LP

@@ -85,15 +85,15 @@ const Approval = () => {
     <Modal visible={visible} footer={null} closable={false}>
       <Row gutter={[24, 24]}>
         <Col span={24}>
+          <Typography.Title level={4}>
+            <Space>
+              <IconSax variant="Bulk" name="Warning2" />
+              <span>For demostration only!</span>
+            </Space>
+          </Typography.Title>
+        </Col>
+        <Col span={24}>
           <Row gutter={[8, 8]}>
-            <Col span={24}>
-              <Typography.Title level={4}>
-                <Space>
-                  <IconSax variant="Bulk" name="Warning2" />
-                  <span>For demostration only!</span>
-                </Space>
-              </Typography.Title>
-            </Col>
             <Col span={24}>
               <Typography.Text>
                 The prototype is to propose a zero-knowledge Automated Market
@@ -128,8 +128,13 @@ const Approval = () => {
           </Row>
         </Col>
         <Col span={24}>
-          <Button type="primary" onClick={initSwap} block>
-            Undestand
+          <Button
+            type="primary"
+            onClick={initSwap}
+            icon={<IconSax variant="Bulk" name="TickCircle" />}
+            block
+          >
+            Understand
           </Button>
         </Col>
       </Row>
