@@ -13,6 +13,7 @@ import { TwistedElGamal } from 'helper/twistedElGamal'
 import { Point } from 'helper/point'
 import { randScalar } from 'helper/utils'
 import { Wallet } from 'store/wallet.reducer'
+import { useBalance } from 'hooks/useBalance'
 
 export type TransferProps = { wallet: Wallet }
 
@@ -23,6 +24,8 @@ const Transfer = ({ wallet }: TransferProps) => {
   )
   const dispatch = useDispatch<AppDispatch>()
   const { ledger } = useSelector((state: AppState) => state)
+
+  const balance = useBalance(wallet.publicKey)
 
   const getAccount = useCallback(
     async (publicKey: PublicKey) => {
@@ -92,6 +95,7 @@ const Transfer = ({ wallet }: TransferProps) => {
           placeholder="Amount"
           onChange={(value) => setAmount(value)}
           value={amount}
+          max={balance}
           suffix={
             <Button
               type="text"

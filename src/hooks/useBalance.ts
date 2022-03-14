@@ -5,10 +5,11 @@ import { PublicKey } from '@solana/web3.js'
 import { AppState } from 'store'
 import { hashmap } from 'helper/hashmap'
 
-export const useBalance = (publicKey: PublicKey): number => {
+export const useBalance = (publicKey?: PublicKey): number => {
   const { ledger } = useSelector((state: AppState) => state)
 
   const commitment = useMemo(() => {
+    if (!publicKey) return ''
     const account = ledger[publicKey.toBase58()]
     if (!account || account.type !== 'account') return ''
     const amount = account.amount
