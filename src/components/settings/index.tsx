@@ -1,34 +1,9 @@
-import {
-  Avatar,
-  Button,
-  Col,
-  Divider,
-  Popover,
-  Row,
-  Space,
-  Tooltip,
-  Typography,
-} from 'antd'
+import { Button, Col, Divider, Popover, Row, Typography } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
-
-import LogoSen from 'static/images/logo_sen.svg'
 
 const Settings = () => {
   return (
     <Row gutter={[4, 4]} justify="end" align="middle" wrap={false}>
-      <Col>
-        <Space size={4} style={{ cursor: 'pointer' }}>
-          <Typography.Text style={{ fontSize: 12, color: '#7A7B85' }}>
-            Powered by
-          </Typography.Text>
-          <Tooltip title="Sentre Protocol">
-            <Avatar src={LogoSen} size={20} />
-          </Tooltip>
-        </Space>
-      </Col>
-      <Col>
-        <Divider type="vertical" style={{ padding: 0 }} />
-      </Col>
       <Col>
         <Popover
           placement="bottomRight"
