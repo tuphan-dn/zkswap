@@ -49,11 +49,21 @@ const Settings = () => {
               <Col span={24}>
                 <Col span={24}>
                   <Row gutter={[8, 8]} justify="space-between">
-                    <Typography.Text>0.1%</Typography.Text>
-                    <Typography.Text>0.1%</Typography.Text>
-                    <Typography.Text>0.1%</Typography.Text>
-                    <Typography.Text>0.1%</Typography.Text>
-                    <Typography.Text type="danger">Freely</Typography.Text>
+                    <Typography.Text className="cursor-pointer">
+                      0.1%
+                    </Typography.Text>
+                    <Typography.Text className="cursor-pointer">
+                      0.1%
+                    </Typography.Text>
+                    <Typography.Text className="cursor-pointer">
+                      0.1%
+                    </Typography.Text>
+                    <Typography.Text className="cursor-pointer">
+                      0.1%
+                    </Typography.Text>
+                    <Typography.Text className="cursor-pointer" type="danger">
+                      Freely
+                    </Typography.Text>
                   </Row>
                 </Col>
               </Col>
@@ -88,7 +98,7 @@ const Settings = () => {
                 </Row>
               </Col>
               <Col span={24}>
-                <Typography.Paragraph  className="caption">
+                <Typography.Paragraph className="caption">
                   Take advantage of all the familiar tools.
                 </Typography.Paragraph>
               </Col>

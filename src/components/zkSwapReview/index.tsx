@@ -1,4 +1,4 @@
-import { Card, Row, Col, Typography } from 'antd'
+import { Card, Row, Col, Typography, Button } from 'antd'
 import Price from './price'
 import Review from './review'
 
@@ -20,6 +20,11 @@ const ZkSwapReview = () => {
             <Review title={'Slippage Tolerance'} value={'100%'}></Review>
             <Review title={'Route'} value={''}></Review>
           </Row>
+        </Col>
+        <Col span={24}>
+          <Button type="primary" disabled={true} block>
+            Review & Swap
+          </Button>
         </Col>
       </Row>
     </Card>

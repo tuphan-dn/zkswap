@@ -34,6 +34,7 @@ const Header = () => {
           <Navigation name="Home" to="/home" />
           <Navigation name="Liquidity" to="/liquidity" />
           <Navigation name="SPL" to="/spl" />
+          <Navigation name="Swap" to="/swap" />
         </Space>
       </Col>
     </Row>
