@@ -32,8 +32,8 @@ const Header = () => {
       </Col>
       <Col>
         <Space>
-          <Navigation name="Liquidity" to="/liquidity" />
           <Navigation name="Swap" to="/swap" />
+          <Navigation name="Liquidity" to="/liquidity" />
           <Debug />
         </Space>
       </Col>
