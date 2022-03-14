@@ -1,6 +1,7 @@
 import { Avatar, Col, Modal, Row, Space, Typography } from 'antd'
 import { Fragment, useState } from 'react'
 import { DownOutlined } from '@ant-design/icons'
+import ListSelection from './listSelection'
 
 const TokenSelection = ({ url }: { url: string }) => {
   const [visible, setVisible] = useState(false)
@@ -28,10 +29,13 @@ const TokenSelection = ({ url }: { url: string }) => {
         footer={null}
         destroyOnClose={true}
         centered={true}
+        bodyStyle={{ background: '#f4f4f5', borderRadius: '16px' }}
       >
         <Row gutter={[16, 16]}>
           <Col span={24} />
-          <Col span={24}>List Selection</Col>
+          <Col span={24}>
+            <ListSelection />
+          </Col>
         </Row>
       </Modal>
     </Fragment>
