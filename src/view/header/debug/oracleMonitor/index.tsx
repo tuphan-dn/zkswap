@@ -105,7 +105,12 @@ const OracleMonitor = () => {
           </Space>
         </Col>
         <Col span={24}>
-          <Button type="primary" onClick={initSwap} disabled={!!ra || !!rb}>
+          <Button
+            type="primary"
+            onClick={initSwap}
+            disabled={!!ra || !!rb}
+            block
+          >
             Initialize a pool
           </Button>
         </Col>

@@ -33,7 +33,6 @@ const Header = () => {
       <Col>
         <Space>
           <Navigation name="Liquidity" to="/liquidity" />
-          <Navigation name="SPL" to="/spl" />
           <Debug />
         </Space>
       </Col>

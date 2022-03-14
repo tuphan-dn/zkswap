@@ -32,14 +32,14 @@ const Debug = () => {
             <OracleMonitor />
           </Col>
           <Col span={24}>
-            <WalletMonitor publicKey={wallet1.publicKey} />
+            <WalletMonitor wallet={wallet1} />
           </Col>
           <Col span={24}>
-            <WalletMonitor publicKey={wallet2.publicKey} />
+            <WalletMonitor wallet={wallet2} />
           </Col>
-          {lpWallet?.publicKey ? (
+          {lpWallet ? (
             <Col span={24}>
-              <WalletMonitor publicKey={lpWallet.publicKey} />
+              <WalletMonitor wallet={lpWallet} />
             </Col>
           ) : null}
         </Row>
