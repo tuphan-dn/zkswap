@@ -1,4 +1,6 @@
 const { CracoLessPlugin } = require('./plugins/craco-less')
+const CracoSilence = require('./plugins/craco-silence')
+const CracoCompatibility = require('./plugins/craco-compatibility')
 
 module.exports = {
   plugins: [
@@ -11,6 +13,12 @@ module.exports = {
           },
         },
       },
+    },
+    {
+      plugin: CracoSilence,
+    },
+    {
+      plugin: CracoCompatibility,
     },
   ],
 }

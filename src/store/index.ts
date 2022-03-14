@@ -2,6 +2,9 @@ import { configureStore } from '@reduxjs/toolkit'
 import { devTools, bigintSerializationMiddleware } from 'store/devTools'
 
 import ui from './ui.reducer'
+import ledger from './ledger.reducer'
+import oracle from './oracle.reducer'
+import wallet from './wallet.reducer'
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -9,6 +12,9 @@ const store = configureStore({
   devTools: devTools('zkswap'),
   reducer: {
     ui,
+    ledger,
+    oracle,
+    wallet,
   },
 })
 

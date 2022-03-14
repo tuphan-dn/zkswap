@@ -1,31 +1,32 @@
-import { Row, Col, Typography, Button } from 'antd'
-import IconSax from 'components/iconsax'
-import ZkSwapForm from 'components/zkswapForm'
+import { useSelector } from 'react-redux'
+
+import { Row, Col } from 'antd'
+import OracleMonitor from 'view/oracleMonitor'
+import WalletMonitor from 'view/walletMonitor'
+
+import { AppState } from 'store'
 
 const Home = () => {
+  const {
+    wallet: { wallet1, wallet2, lpWallet },
+  } = useSelector((state: AppState) => state)
+
   return (
-    <Row gutter={[24, 24]} className="home">
-      <Col span={24}>
-        <Typography.Text>Home</Typography.Text>
+    <Row gutter={[24, 24]}>
+      <Col xs={24} md={12}>
+        <OracleMonitor />
       </Col>
-      <Col span={24}>
-        <Button type="primary" icon={<IconSax name="Activity" />}>
-          Test
-        </Button>
+      <Col xs={24} md={12}>
+        <WalletMonitor publicKey={wallet1.publicKey} />
       </Col>
-      <Col span={24} style={{ background: '#eff2f5' }}>
-        <Row gutter={[24, 24]} justify="center">
-          <Col lg={8} md={12} xs={24}>
-            <Row gutter={[24, 24]}>
-              <Col span={24}>
-                <ZkSwapForm></ZkSwapForm>
-              </Col>
-              <Col span={24}>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+      <Col xs={24} md={12}>
+        <WalletMonitor publicKey={wallet2.publicKey} />
       </Col>
+      {lpWallet?.publicKey ? (
+        <Col xs={24} md={12}>
+          <WalletMonitor publicKey={lpWallet.publicKey} />
+        </Col>
+      ) : null}
     </Row>
   )
 }
