@@ -20,8 +20,11 @@ import { TwistedElGamal } from 'helper/twistedElGamal'
 import { Point } from 'helper/point'
 import { randScalar } from 'helper/utils'
 import { setLPWallet, Wallet } from 'store/wallet.reducer'
+import configs from 'configs'
 
-const SUPPLY = BigInt(10 ** 3)
+const {
+  sol: { supply },
+} = configs
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -47,9 +50,9 @@ const App = () => {
       // Mint supply to the account
       await dispatch(
         mintTo({
-          srcAmount: new TwistedElGamal(SUPPLY, mint.s),
+          srcAmount: new TwistedElGamal(supply, mint.s),
           dstAmount: TwistedElGamal.build(
-            Point.G.multiply(SUPPLY).add(Point.H.multiply(z)),
+            Point.G.multiply(supply).add(Point.H.multiply(z)),
             account.amount.P.multiply(z),
             account.amount.P,
           ),

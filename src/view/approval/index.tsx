@@ -15,8 +15,11 @@ import {
   mintTo,
   transfer,
 } from 'store/ledger.reducer'
+import configs from 'configs'
 
-const DEPOSIT = BigInt(10 ** 2)
+const {
+  sol: { reserve },
+} = configs
 
 const Approval = () => {
   const {
@@ -50,8 +53,8 @@ const Approval = () => {
     ).unwrap()) as Record<string, Account>
     // Create deposit proof
     const depositProof = Deposit.prove(
-      DEPOSIT,
-      DEPOSIT,
+      reserve,
+      reserve,
       srcA,
       srcB,
       dstLP,
@@ -69,7 +72,7 @@ const Approval = () => {
         transfer: (args: any) => dispatch(transfer(args)),
         mintTo: (args: any) => dispatch(mintTo(args)),
       }),
-    )
+    ).unwrap()
   }, [
     dispatch,
     srcA,

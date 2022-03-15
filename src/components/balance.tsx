@@ -3,6 +3,7 @@ import { PublicKey } from '@solana/web3.js'
 import { useAccount } from 'hooks/useAccount'
 import { hashmap } from 'helper/hashmap'
 import { useMemo } from 'react'
+import { numeric } from 'helper/utils'
 
 export type BalanceProps = { publicKey?: PublicKey }
 
@@ -16,7 +17,7 @@ const Balance = ({ publicKey }: BalanceProps) => {
     return hashmap(commitment) || 0
   }, [account])
 
-  return <span>{balance}</span>
+  return <span>{numeric(balance).format('0,0.[00]')}</span>
 }
 
 export default Balance

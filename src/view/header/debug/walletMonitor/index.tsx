@@ -2,17 +2,13 @@ import { Card, Col, Row, Space, Typography } from 'antd'
 import TokenAvatar from 'components/tokenAvatar'
 import Transfer from './transfer'
 
-import { useBalance } from 'hooks/useBalance'
-import { useAccount } from 'hooks/useAccount'
 import { shortenAddress } from 'helper/utils'
 import { Wallet } from 'store/wallet.reducer'
+import Balance from 'components/balance'
 
 export type WalletMonitorProps = { wallet: Wallet }
 
 const WalletMonitor = ({ wallet }: WalletMonitorProps) => {
-  const account = useAccount(wallet.publicKey)
-  const balance = useBalance(wallet.publicKey)
-
   return (
     <Card bodyStyle={{ padding: 16 }}>
       <Row gutter={[24, 24]}>
@@ -24,13 +20,15 @@ const WalletMonitor = ({ wallet }: WalletMonitorProps) => {
             <Space>
               <Typography.Text type="secondary">Address:</Typography.Text>
               <Typography.Text copyable>
-                {shortenAddress(account?.publicKey.toBase58() || '')}
+                {shortenAddress(wallet.publicKey.toBase58() || '')}
               </Typography.Text>
             </Space>
             <Space>
               <Typography.Text type="secondary">Balance:</Typography.Text>
-              <Typography.Text>{balance.toString()}</Typography.Text>
-              <TokenAvatar publicKey={account?.mint} />
+              <Typography.Text>
+                <Balance publicKey={wallet.publicKey} />
+              </Typography.Text>
+              <TokenAvatar publicKey={wallet.mint} />
             </Space>
           </Space>
         </Col>

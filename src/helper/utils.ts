@@ -56,5 +56,5 @@ export const numeric = (
   value?: number | string | BigInt,
 ): ReturnType<typeof numbro> => {
   if (!value) return numbro('0')
-  return numbro(value)
+  return numbro(Number(value))
 }

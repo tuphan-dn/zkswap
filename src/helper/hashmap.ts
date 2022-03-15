@@ -1,5 +1,5 @@
 const LOOP = 2 ** 16
-const COUNTER = 2 ** 0
+const COUNTER = 2 ** 4
 
 export const hashmap = (hash: string) => {
   for (let i = 0; i < COUNTER; i++) {

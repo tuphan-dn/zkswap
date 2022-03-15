@@ -3,23 +3,35 @@ import { Env } from 'configs'
 /**
  * Contructor
  */
-type Conf = {}
+type Conf = {
+  supply: bigint
+  reserve: bigint
+}
 
 const conf: Record<Env, Conf> = {
   /**
    * Development configurations
    */
-  development: {},
+  development: {
+    supply: BigInt(10 ** 6),
+    reserve: BigInt(9 * 10 ** 5),
+  },
 
   /**
    * Staging configurations
    */
-  staging: {},
+  staging: {
+    supply: BigInt(10 ** 6),
+    reserve: BigInt(9 * 10 ** 5),
+  },
 
   /**
    * Production configurations
    */
-  production: {},
+  production: {
+    supply: BigInt(10 ** 6),
+    reserve: BigInt(9 * 10 ** 5),
+  },
 }
 
 /**

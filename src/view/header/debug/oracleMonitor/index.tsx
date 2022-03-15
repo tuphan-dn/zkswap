@@ -4,6 +4,7 @@ import { Card, Col, Divider, Row, Space, Typography } from 'antd'
 
 import { AppState } from 'store'
 import { usePrice } from 'hooks/usePrice'
+import { numeric } from 'helper/utils'
 
 const OracleMonitor = () => {
   const {
@@ -22,17 +23,21 @@ const OracleMonitor = () => {
           <Space direction="vertical">
             <Space>
               <Typography.Text type="secondary">Price:</Typography.Text>
-              <Typography.Text>{p.toString()}</Typography.Text>
+              <Typography.Text>{numeric(p).format('0,0.[00]')}</Typography.Text>
               <Typography.Text type="secondary">
                 (PRECISION = 10^9)
               </Typography.Text>
             </Space>
             <Space>
               <Typography.Text type="secondary">Reserve A:</Typography.Text>
-              <Typography.Text>{ra.toString()}</Typography.Text>
+              <Typography.Text>
+                {numeric(ra).format('0,0.[00]')}
+              </Typography.Text>
               <Divider type="vertical" />
               <Typography.Text type="secondary">Reserve B:</Typography.Text>
-              <Typography.Text>{rb.toString()}</Typography.Text>
+              <Typography.Text>
+                {numeric(rb).format('0,0.[00]')}
+              </Typography.Text>
             </Space>
           </Space>
         </Col>

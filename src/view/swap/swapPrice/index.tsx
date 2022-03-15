@@ -51,7 +51,7 @@ const SwapPrice = () => {
   const dst = useAccount(ask.publicKey)
   const { gamma, reverted } = computeGamma(
     p,
-    BigInt(Number(price) * Number(PRECISION) || 0),
+    BigInt(Math.round(Number(price) * Number(PRECISION)) || 0),
   )
   const productConstantProof = useOracle(gamma, src?.amount.P, dst?.amount.P)
 
