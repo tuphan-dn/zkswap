@@ -112,15 +112,14 @@ const SwapPrice = () => {
             bordered={false}
             style={{
               textAlign: 'right',
-              fontSize: 20,
+              fontSize: 24,
               padding: 0,
             }}
             placeholder="New Price"
             value={price}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              const value = e.target.value
-              setPrice(value)
-            }}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setPrice(e.target.value || '')
+            }
           />
         </Col>
         <Col span={24}>
