@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/zkswap/static/css/main.e9f1a0d7.css",
-    "main.js": "/zkswap/static/js/main.c0fdd57f.js",
+    "main.js": "/zkswap/static/js/main.1fb33367.js",
     "static/js/255.7f7f725b.chunk.js": "/zkswap/static/js/255.7f7f725b.chunk.js",
     "index.html": "/zkswap/index.html",
     "main.e9f1a0d7.css.map": "/zkswap/static/css/main.e9f1a0d7.css.map",
-    "main.c0fdd57f.js.map": "/zkswap/static/js/main.c0fdd57f.js.map",
+    "main.1fb33367.js.map": "/zkswap/static/js/main.1fb33367.js.map",
     "255.7f7f725b.chunk.js.map": "/zkswap/static/js/255.7f7f725b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e9f1a0d7.css",
-    "static/js/main.c0fdd57f.js"
+    "static/js/main.1fb33367.js"
   ]
 }
